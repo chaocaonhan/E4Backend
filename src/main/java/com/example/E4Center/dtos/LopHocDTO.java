@@ -1,20 +1,35 @@
 package com.example.E4Center.dtos;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import lombok.*;
+
+import java.util.Date;
 
 @Data
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LopHocDTO {
+public class LopHocDTO{
+
     @NotBlank(message = "chua nhap ten lop")
-    private String TenLopHoc;
-    @NotNull(message = "chua nhap ngay khai giang")
-    private String NgayKhaiGiang;
-    private String ThoiGianHoc;
-    private String ThuHoc;
-    private String MaKhoaHoc;
+    @JsonProperty("TenLopHoc")
+    private String tenlophoc;
+
+    @Valid
+    @JsonProperty("NgayKhaiGiang")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+    private Date ngaykhaigiang;
+
+    @JsonProperty("ThoiGianHoc")
+    private String thoigianhoc;
+
+    @JsonProperty("ThuHoc")
+    private String thuhoc;
+
+    @JsonProperty("makhoahoc")
+    private Long makhoahoc;
 }

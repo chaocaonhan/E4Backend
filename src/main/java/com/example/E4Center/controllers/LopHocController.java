@@ -2,7 +2,11 @@ package com.example.E4Center.controllers;
 
 
 import com.example.E4Center.dtos.LopHocDTO;
+import com.example.E4Center.models.KhoaHoc;
+import com.example.E4Center.models.LopHoc;
+import com.example.E4Center.services.LopHocService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -12,16 +16,27 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/lophoc")
+@RequiredArgsConstructor
 public class LopHocController {
+    private final LopHocService lopHocService;
+
+    //Tìm lớp học theo id
+    @GetMapping("/{id}")
+    public ResponseEntity<LopHoc> getLopHocById(@PathVariable long id) {
+        LopHoc newLopHoc = lopHocService.getLopHocById(id);
+        return ResponseEntity.ok(newLopHoc);
+    }
 
     @GetMapping("")
-    public ResponseEntity<String> getAllLopHoc(
+    public ResponseEntity<List<LopHoc>> getAllLopHoc(
     ) {
-        return ResponseEntity.ok("lay tat ca cac lop");
+
+        List<LopHoc> lopHocs = lopHocService.getAllLopHoc();
+        return ResponseEntity.ok(lopHocs);
     }
 
     @PostMapping("")
-    public ResponseEntity<?> insertLopHoc(
+    public ResponseEntity<?> createLopHoc(
             @Valid @RequestBody LopHocDTO lopHocDTO,
             BindingResult bindingResult
             ){
@@ -33,6 +48,7 @@ public class LopHocController {
                         .toList();
                 return ResponseEntity.badRequest().body(errorMessages);
             }
+            lopHocService.createLopHoc(lopHocDTO);
             return ResponseEntity.ok("them lop hoc thanh cong");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -47,11 +63,6 @@ public class LopHocController {
         return ResponseEntity.ok("Sua lop thanh cong");
     }
 
-
-    @GetMapping("/{id}")
-    public ResponseEntity<String> getLopHocById(@PathVariable("id") long MaLop) {
-        return ResponseEntity.ok("lop hoc co ma la :"+MaLop);
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteLopHocById(@PathVariable("id") long MaLop) {

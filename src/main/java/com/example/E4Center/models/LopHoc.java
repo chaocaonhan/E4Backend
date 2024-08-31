@@ -7,25 +7,25 @@ import lombok.*;
 import java.util.Date;
 
 @Entity
-@Table(name="tbllophoc")
 @Data
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name="tbllophoc")
 public class LopHoc {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long MaLop;
+    private Long malop;
 
-    private String TenLopHoc;
-    private Date NgayKhaiGiang;
-    private String ThoiGianHoc;
-    private String ThuHoc;
+    private String tenlophoc;
+    private Date ngaykhaigiang;
+    private String thoigianhoc;
+    private String thuhoc;
 
     @ManyToOne
-    @JoinColumn(name = "MaKhoaHoc")
+    @JoinColumn(name = "makhoahoc")
     private KhoaHoc khoaHoc;
 
 }

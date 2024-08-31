@@ -10,7 +10,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class KhoaHocDTO {
-    @NotEmpty()
     private String tenkhoahoc;
     @Min(value = 0, message = "Hoc phi phai lon hon hoac bang 0")
     private int hocphi;
