@@ -1,4 +1,4 @@
-package com.example.E4Center.services;
+package com.example.E4Center.iservices;
 
 import com.example.E4Center.dtos.KhoaHocDTO;
 import com.example.E4Center.models.KhoaHoc;

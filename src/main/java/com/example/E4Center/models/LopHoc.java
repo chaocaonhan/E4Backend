@@ -1,6 +1,8 @@
 package com.example.E4Center.models;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,8 +26,8 @@ public class LopHoc {
     private String thoigianhoc;
     private String thuhoc;
 
-    @ManyToOne
-    @JoinColumn(name = "makhoahoc")
+    @ManyToOne(optional=false)
+    @JoinColumn(name = "makhoahoc", referencedColumnName = "makhoahoc")
+//    @JsonBackReference
     private KhoaHoc khoaHoc;
-
 }

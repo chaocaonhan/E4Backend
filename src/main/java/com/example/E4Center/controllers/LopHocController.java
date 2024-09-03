@@ -2,11 +2,11 @@ package com.example.E4Center.controllers;
 
 
 import com.example.E4Center.dtos.LopHocDTO;
-import com.example.E4Center.models.KhoaHoc;
 import com.example.E4Center.models.LopHoc;
 import com.example.E4Center.services.LopHocService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -22,7 +22,7 @@ public class LopHocController {
 
     //Tìm lớp học theo id
     @GetMapping("/{id}")
-    public ResponseEntity<LopHoc> getLopHocById(@PathVariable long id) {
+    public ResponseEntity<LopHoc> getLopHocById(@PathVariable long id) throws Exception {
         LopHoc newLopHoc = lopHocService.getLopHocById(id);
         return ResponseEntity.ok(newLopHoc);
     }
@@ -59,14 +59,20 @@ public class LopHocController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateLopHoc(@PathVariable("id") long MaLop){
+    public ResponseEntity<?> updateLopHoc(@PathVariable long id
+            ,@RequestBody LopHocDTO lopHocDTO){
         return ResponseEntity.ok("Sua lop thanh cong");
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteLopHocById(@PathVariable("id") long MaLop) {
-        return ResponseEntity.ok("xoa lop co ma :"+MaLop);
+    public ResponseEntity<String> deleteLopHocById(@PathVariable long id) {
+        try {
+            lopHocService.deleteLopHocById(id);
+            return ResponseEntity.ok("Deleted class with ID: " + id);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to delete class with ID: " + id + ". Error: " + ex.getMessage());
+        }
     }
-
 }
