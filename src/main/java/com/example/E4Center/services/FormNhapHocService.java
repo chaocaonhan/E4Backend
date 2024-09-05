@@ -38,6 +38,7 @@ public class FormNhapHocService implements IFormNhapHocService {
 
     @Override
     public List<FormNhapHoc> getAllFormNhapHoc() {
+
         return formNhapHocRepository.findAll();
     }
 

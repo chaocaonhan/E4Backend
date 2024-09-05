@@ -1,6 +1,7 @@
 package com.example.E4Center.controllers;
 
 
+import com.example.E4Center.Responses.LopHocResponse;
 import com.example.E4Center.dtos.LopHocDTO;
 import com.example.E4Center.models.LopHoc;
 import com.example.E4Center.services.LopHocService;
@@ -18,20 +19,20 @@ import java.util.List;
 @RequestMapping("api/v1/lophoc")
 @RequiredArgsConstructor
 public class LopHocController {
-    private final LopHocService lopHocService;
+    private final LopHocService lophocService;
 
     //Tìm lớp học theo id
     @GetMapping("/{id}")
     public ResponseEntity<LopHoc> getLopHocById(@PathVariable long id) throws Exception {
-        LopHoc newLopHoc = lopHocService.getLopHocById(id);
+        LopHoc newLopHoc = lophocService.getLopHocById(id);
         return ResponseEntity.ok(newLopHoc);
     }
 
     @GetMapping("")
-    public ResponseEntity<List<LopHoc>> getAllLopHoc(
+    public ResponseEntity<List<LopHocResponse>> getAllLopHoc(
     ) {
 
-        List<LopHoc> lopHocs = lopHocService.getAllLopHoc();
+        List<LopHocResponse> lopHocs = lophocService.getAllLopHoc();
         return ResponseEntity.ok(lopHocs);
     }
 
@@ -48,19 +49,17 @@ public class LopHocController {
                         .toList();
                 return ResponseEntity.badRequest().body(errorMessages);
             }
-            lopHocService.createLopHoc(lopHocDTO);
+            lophocService.createLopHoc(lopHocDTO);
             return ResponseEntity.ok("them lop hoc thanh cong");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-
-
-
     @PutMapping("/{id}")
     public ResponseEntity<?> updateLopHoc(@PathVariable long id
-            ,@RequestBody LopHocDTO lopHocDTO){
+            ,@RequestBody LopHocDTO lopHocDTO) throws Exception {
+        lophocService.updateLopHoc(id,lopHocDTO);
         return ResponseEntity.ok("Sua lop thanh cong");
     }
 
@@ -68,7 +67,7 @@ public class LopHocController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteLopHocById(@PathVariable long id) {
         try {
-            lopHocService.deleteLopHocById(id);
+            lophocService.deleteLopHocById(id);
             return ResponseEntity.ok("Deleted class with ID: " + id);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -16,18 +16,18 @@ import java.util.Date;
 public class LopHocDTO{
 
     @NotBlank(message = "chua nhap ten lop")
-    @JsonProperty("TenLopHoc")
+    @JsonProperty("tenlophoc")
     private String tenlophoc;
 
     @Valid
-    @JsonProperty("NgayKhaiGiang")
+    @JsonProperty("ngaykhaigiang")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date ngaykhaigiang;
 
-    @JsonProperty("ThoiGianHoc")
+    @JsonProperty("thoigianhoc")
     private String thoigianhoc;
 
-    @JsonProperty("ThuHoc")
+    @JsonProperty("thuhoc")
     private String thuhoc;
 
     @JsonProperty("makhoahoc")

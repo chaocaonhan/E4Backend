@@ -13,4 +13,6 @@ public class KhoaHocDTO {
     private String tenkhoahoc;
     @Min(value = 0, message = "Hoc phi phai lon hon hoac bang 0")
     private int hocphi;
+    private String uudai;
+    private String tguudai;
 }
