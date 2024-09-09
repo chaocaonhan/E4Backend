@@ -3,6 +3,8 @@ package com.example.E4Center.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
+
 @Entity
 @Table(name = "tblkhoahoc")
 @Getter
@@ -22,6 +24,6 @@ public class KhoaHoc {
     private float hocphi;
 
     private String uudai;
-    private String tguudai;
+    private Date thoigianuudai;
 
 }

@@ -4,6 +4,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
+import java.sql.Date;
+
 @Data
 @Getter
 @Setter
@@ -14,5 +16,5 @@ public class KhoaHocDTO {
     @Min(value = 0, message = "Hoc phi phai lon hon hoac bang 0")
     private int hocphi;
     private String uudai;
-    private String tguudai;
+    private Date thoigianuudai;
 }

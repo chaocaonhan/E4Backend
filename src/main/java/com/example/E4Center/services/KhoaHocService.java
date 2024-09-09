@@ -33,7 +33,7 @@ public class KhoaHocService implements IKhoaHocService {
                 .tenkhoahoc(khoaHocDTO.getTenkhoahoc())
                 .hocphi(khoaHocDTO.getHocphi())
                 .uudai(khoaHocDTO.getUudai())
-                .tguudai(khoaHocDTO.getTguudai())
+                .thoigianuudai(khoaHocDTO.getThoigianuudai())
                 .build();
         return khoaHocRepository.save(khoaHoc);
     }
@@ -44,7 +44,7 @@ public class KhoaHocService implements IKhoaHocService {
         existingKhoaHoc.setTenkhoahoc(khoaHocDTO.getTenkhoahoc());
         existingKhoaHoc.setHocphi(khoaHocDTO.getHocphi());
         existingKhoaHoc.setUudai(khoaHocDTO.getUudai());
-        existingKhoaHoc.setTguudai(khoaHocDTO.getTguudai());
+        existingKhoaHoc.setThoigianuudai(khoaHocDTO.getThoigianuudai());
         khoaHocRepository.save(existingKhoaHoc);
         return existingKhoaHoc;
     }

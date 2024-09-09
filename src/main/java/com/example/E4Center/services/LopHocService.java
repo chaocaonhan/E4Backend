@@ -88,8 +88,6 @@ public class LopHocService implements ILopHocService {
     }
 
 
-
-
     @Override
     public void deleteLopHocById(long MaLop) {
         Optional<LopHoc> optionalLopHoc = lopHocRepository.findById(MaLop);
