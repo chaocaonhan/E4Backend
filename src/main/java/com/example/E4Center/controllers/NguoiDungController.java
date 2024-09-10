@@ -1,9 +1,11 @@
 package com.example.E4Center.controllers;
 
 
+import com.example.E4Center.Responses.NguoiDungResponse;
 import com.example.E4Center.dtos.KhoaHocDTO;
 import com.example.E4Center.dtos.NguoiDungDTO;
 import com.example.E4Center.models.NguoiDung;
+import com.example.E4Center.services.ChucVuService;
 import com.example.E4Center.services.NguoiDungService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +15,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("api/v1/nguoidung")
@@ -61,4 +64,11 @@ public class NguoiDungController {
         nguoidungService.deleteNguoiDung(id);
         return ResponseEntity.ok("delete success");
     }
+
+    @GetMapping("/chucvu")
+    public Set<NguoiDungResponse> getNguoiDungByMachucvu(@RequestParam int machucvu) {
+        return nguoidungService.getNguoiDungByMachucvu(machucvu);
+    }
+
+
 }

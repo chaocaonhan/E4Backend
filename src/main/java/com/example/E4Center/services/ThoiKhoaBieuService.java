@@ -51,7 +51,7 @@ public class ThoiKhoaBieuService implements IThoiKhoaBieuService {
             response.setCahoc(tkb.getCahoc());
             response.setTgbatdau(tkb.getTgbatdau());
             response.setTgketthuc(tkb.getTgketthuc());
-            response.setPhonghoc(tkb.getPhonghoc().getTenphong());  // Assuming you have a `getTenPhongHoc()` in PhongHoc
+            response.setPhonghoc(tkb.getPhonghoc().getTenphong());
             return response;
         }).collect(Collectors.toList());
 

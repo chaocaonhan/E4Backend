@@ -11,4 +11,7 @@ public interface INguoiDungService {
     List<NguoiDung> getAllNguoiDung();
     NguoiDung updateNguoiDung(long MaNguoiDung,NguoiDungDTO nguoiDungDTO);
     void deleteNguoiDung(long MaNguoiDung);
+
+    List<NguoiDung> getALLGiaoVien();
+    List<NguoiDung> getAllHocVien();
 }

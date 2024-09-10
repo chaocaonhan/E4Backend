@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -45,4 +47,7 @@ public class NguoiDung {
 
     @Column(name="matkhau")
     private String matkhau;
+
+    @ManyToMany(mappedBy = "nguoiDungSet")
+    private Set<ChucVu> chucVus = new HashSet<>();
 }
