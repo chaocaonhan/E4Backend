@@ -21,6 +21,7 @@ public class FormNhapHocService implements IFormNhapHocService {
                 .builder()
                 .hoten(formNhapHocDTO.getHoten())
                 .ngaysinh(formNhapHocDTO.getNgaysinh())
+                .tenkhoahoc(formNhapHocDTO.getTenkhoahoc())
                 .gioitinh(formNhapHocDTO.getGioitinh())
                 .sdt(formNhapHocDTO.getSdt())
                 .diachi(formNhapHocDTO.getDiachi())
@@ -49,6 +50,7 @@ public class FormNhapHocService implements IFormNhapHocService {
         existingForm.setNgaysinh(formNhapHocDTO.getNgaysinh());
         existingForm.setGioitinh(formNhapHocDTO.getGioitinh());
         existingForm.setSdt(formNhapHocDTO.getSdt());
+        existingForm.setTenkhoahoc(formNhapHocDTO.getTenkhoahoc());
         existingForm.setDiachi(formNhapHocDTO.getDiachi());
         existingForm.setEmail(formNhapHocDTO.getEmail());
         existingForm.setEmail(formNhapHocDTO.getEmail());

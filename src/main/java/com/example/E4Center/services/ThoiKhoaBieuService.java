@@ -35,27 +35,17 @@ public class ThoiKhoaBieuService implements IThoiKhoaBieuService {
         return response;  // Trả về response
     }
 
-
-
-
     @Override
     public List<ThoiKhoaBieuRespone> getAllThoiKhoa() {
-        // Fetch all ThoiKhoaBieu entities
-        List<ThoiKhoaBieu> thoiKhoaBieuList = thoiKhoaBieuRepository.findAll();
-
-        // Map each ThoiKhoaBieu entity to a ThoiKhoaBieuRespone object
-        List<ThoiKhoaBieuRespone> thoiKhoaBieuRespones = thoiKhoaBieuList.stream().map(tkb -> {
-            ThoiKhoaBieuRespone response = new ThoiKhoaBieuRespone();
-            response.setMatkb(tkb.getMatkb());
-            response.setThuhoc(tkb.getThuhoc());
-            response.setCahoc(tkb.getCahoc());
-            response.setTgbatdau(tkb.getTgbatdau());
-            response.setTgketthuc(tkb.getTgketthuc());
-            response.setPhonghoc(tkb.getPhonghoc().getTenphong());
-            return response;
+        return thoiKhoaBieuRepository.findAll().stream().map(thoiKhoaBieu -> {
+            return new ThoiKhoaBieuRespone().builder()
+                    .thuhoc(thoiKhoaBieu.getThuhoc())
+                    .cahoc(thoiKhoaBieu.getCahoc())
+                    .tgbatdau(thoiKhoaBieu.getTgbatdau())
+                    .tgketthuc(thoiKhoaBieu.getTgketthuc())
+                    .phonghoc(thoiKhoaBieu.getPhonghoc().getTenphong())
+            .build();
         }).collect(Collectors.toList());
-
-        return thoiKhoaBieuRespones;
     }
 
 

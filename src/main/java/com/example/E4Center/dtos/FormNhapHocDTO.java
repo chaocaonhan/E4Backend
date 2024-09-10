@@ -16,6 +16,7 @@ public class FormNhapHocDTO {
     private Date ngaysinh;
     private String gioitinh;
     private String sdt;
+    private String tenkhoahoc;
     private String diachi;
     private String email;
 

@@ -26,6 +26,9 @@ public class FormNhapHoc {
     @Column(name = "ngaysinh")
     private Date ngaysinh;
 
+    @Column(name="tenkhoahoc")
+    private String tenkhoahoc;
+
     @Column(name = "gioitinh")
     private String gioitinh;
 
