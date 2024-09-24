@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class LoaiChucVu {
+public class LoaiChucVu{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
