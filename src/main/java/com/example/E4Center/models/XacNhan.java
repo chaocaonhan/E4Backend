@@ -44,9 +44,11 @@ public class XacNhan {
     @Column(name = "trangthai")
     private String trangthai;
 
-    @Column(name = "malop")
-    private Integer malop;
+    @ManyToOne
+    @JoinColumn(name = "malop")
+    private LopHoc lopHoc;
 
-    @Column(name = "maform")
-    private Long maform;
+    @ManyToOne
+    @JoinColumn(name = "maform")
+    private FormNhapHoc formNhapHoc;
 }

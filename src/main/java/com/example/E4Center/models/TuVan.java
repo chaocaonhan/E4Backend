@@ -3,6 +3,7 @@ package com.example.E4Center.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -19,10 +20,9 @@ public class TuVan {
     private Long matuvan;
 
     private String hoten;
-    private Date ngaygui;
+    private LocalDate ngaygui;
     private String sdt;
     private String nghenghiep;
-    private String cosogannhat;
     private String cauhoituvan;
     private String trangthai;
 }

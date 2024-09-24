@@ -15,5 +15,5 @@ public class ThoiKhoaBieuRespone {
     private String cahoc;
     private LocalTime tgbatdau;
     private LocalTime tgketthuc;
-    private String phonghoc;
+    private String tenphonghoc;
 }

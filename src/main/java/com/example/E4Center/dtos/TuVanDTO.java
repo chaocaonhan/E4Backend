@@ -2,6 +2,7 @@ package com.example.E4Center.dtos;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -13,10 +14,9 @@ public class TuVanDTO {
     private Long matuvan;
 
     private String hoten;
-    private Date ngaygui;
+    private LocalDate ngaygui;
     private String sdt;
     private String nghenghiep;
-    private String cosogannhat;
     private String cauhoituvan;
     private String trangthai;
 }

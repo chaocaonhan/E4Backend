@@ -29,4 +29,8 @@ public class ThoiKhoaBieu {
     @ManyToOne
     @JoinColumn(name = "maphong", referencedColumnName = "maphong")
     private PhongHoc phonghoc;
+
+    @ManyToOne
+    @JoinColumn(name = "malop",referencedColumnName = "malop")
+    private LopHoc lophoc;
 }

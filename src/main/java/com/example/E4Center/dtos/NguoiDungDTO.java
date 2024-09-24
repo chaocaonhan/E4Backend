@@ -22,5 +22,5 @@ public class NguoiDungDTO {
     private String email;
     private String tendangnhap;
     private String matkhau;
-
+    private String tenchucvu;
 }

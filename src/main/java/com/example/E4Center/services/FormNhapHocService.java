@@ -1,7 +1,7 @@
 package com.example.E4Center.services;
 
 import com.example.E4Center.dtos.FormNhapHocDTO;
-import com.example.E4Center.iservices.IFormNhapHocService;
+import com.example.E4Center.services.iservices.IFormNhapHocService;
 import com.example.E4Center.models.FormNhapHoc;
 import com.example.E4Center.repositories.FormNhapHocRepository;
 import lombok.RequiredArgsConstructor;

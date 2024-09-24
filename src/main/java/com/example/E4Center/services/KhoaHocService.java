@@ -1,7 +1,7 @@
 package com.example.E4Center.services;
 
 import com.example.E4Center.dtos.KhoaHocDTO;
-import com.example.E4Center.iservices.IKhoaHocService;
+import com.example.E4Center.services.iservices.IKhoaHocService;
 import com.example.E4Center.models.KhoaHoc;
 import com.example.E4Center.repositories.KhoaHocRepository;
 import lombok.RequiredArgsConstructor;

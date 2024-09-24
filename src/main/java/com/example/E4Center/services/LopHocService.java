@@ -1,15 +1,17 @@
 package com.example.E4Center.services;
 
 import com.example.E4Center.Responses.LopHocResponse;
+import com.example.E4Center.Responses.NguoiDungResponse;
 import com.example.E4Center.dtos.LopHocDTO;
 import com.example.E4Center.exceptions.DataNotFoundException;
-import com.example.E4Center.iservices.ILopHocService;
+import com.example.E4Center.models.NguoiDung;
+import com.example.E4Center.repositories.NguoiLopHocRepository;
+import com.example.E4Center.services.iservices.ILopHocService;
 import com.example.E4Center.models.KhoaHoc;
 import com.example.E4Center.models.LopHoc;
 import com.example.E4Center.repositories.KhoaHocRepository;
 import com.example.E4Center.repositories.LopHocRepository;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,11 +23,38 @@ import java.util.stream.Collectors;
 public class LopHocService implements ILopHocService {
     private final LopHocRepository lopHocRepository;
     private final KhoaHocRepository khoaHocRepository;
-    private final ModelMapper modelMapper;
+    private final NguoiLopHocRepository nguoiLopHocRepository;
+
 
     @Override
     public LopHoc getLopHocById(long MaLop) throws Exception {
         return  lopHocRepository.findById(MaLop).orElseThrow(() -> new RuntimeException(" not found"));
+    }
+
+    @Override
+    public LopHocResponse getLopHocDetails(Long malop) {
+        // Fetch LopHoc entity by malop
+        LopHoc lopHoc = lopHocRepository.findById(malop).orElseThrow(() -> new RuntimeException("LopHoc not found"));
+
+        // Prepare the response
+        LopHocResponse response = LopHocResponse.builder()
+                .malop(lopHoc.getMalop())
+                .tenlophoc(lopHoc.getTenlophoc())
+                .ngaykhaigiang(lopHoc.getNgaykhaigiang())
+                .thoigianhoc(lopHoc.getThoigianhoc())
+                .thuhoc(lopHoc.getThuhoc())
+                .tenkhoahoc(lopHoc.getKhoaHoc().getTenkhoahoc())
+                .hocvien(lopHoc.getNguoiLopHocs().stream()
+                        .filter(nlh -> nlh.getNguoiDung().getChucVu().getMachucvu() == 1) // Filter students
+                        .map(nlh -> nlh.getNguoiDung().getHoten()) // Get student names
+                        .collect(Collectors.toList()))
+                .giangVien(lopHoc.getNguoiLopHocs().stream()
+                        .filter(nlh -> nlh.getNguoiDung().getChucVu().getMachucvu() == 2) // Filter teachers
+                        .map(nlh -> nlh.getNguoiDung().getHoten()) // Get teacher names
+                        .collect(Collectors.toList()))
+                .build();
+
+        return response;
     }
 
     @Override
@@ -38,10 +67,17 @@ public class LopHocService implements ILopHocService {
                     .thoigianhoc(lopHoc.getThoigianhoc())
                     .thuhoc(lopHoc.getThuhoc())
                     .tenkhoahoc(lopHoc.getKhoaHoc().getTenkhoahoc())
+                    .hocvien(lopHoc.getNguoiLopHocs().stream()
+                            .filter(nlh -> nlh.getNguoiDung().getChucVu().getMachucvu() == 1) // Filter students
+                            .map(nlh -> nlh.getNguoiDung().getHoten()) // Get student names
+                            .collect(Collectors.toList()))
+                    .giangVien(lopHoc.getNguoiLopHocs().stream()
+                            .filter(nlh -> nlh.getNguoiDung().getChucVu().getMachucvu() == 2) // Filter teachers
+                            .map(nlh -> nlh.getNguoiDung().getHoten()) // Get teacher names
+                            .collect(Collectors.toList()))
                     .build();
         }).collect(Collectors.toList());
     }
-
 
     @Override
     public LopHoc createLopHoc(LopHocDTO lopHocDTO) throws DataNotFoundException {
@@ -66,17 +102,14 @@ public class LopHocService implements ILopHocService {
         LopHoc existingLopHoc = getLopHocById(MaLop);
         System.out.println(lopHocDTO.getTenlophoc());
         System.out.println(lopHocDTO.getNgaykhaigiang());
-// In ra các trường khác để kiểm tra xem có bị null không
-
-
+        // In ra các trường khác để kiểm tra xem có bị null không
         //coppy cac thuoc tinh tu DTO -> product
-            //co the su dung ModelMaper, ObjectMaper
+        //co the su dung ModelMaper, ObjectMaper
 
             KhoaHoc existingKhoaHoc = khoaHocRepository
                     .findById(lopHocDTO.getMakhoahoc())
                     .orElseThrow(() -> new DataNotFoundException(
                             "Khong tim thay khoa hoc co ma la" + lopHocDTO.getMakhoahoc()));
-
             existingLopHoc.setTenlophoc(lopHocDTO.getTenlophoc());
             existingLopHoc.setNgaykhaigiang(lopHocDTO.getNgaykhaigiang());
             existingLopHoc.setThoigianhoc(lopHocDTO.getThoigianhoc());

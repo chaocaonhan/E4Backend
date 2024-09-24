@@ -30,7 +30,7 @@ public class TuVanController {
 
         }
         tuVanService.createTuVan(tuVanDTO);
-        return ResponseEntity.ok(tuVanDTO);
+        return ResponseEntity.ok("them thanh cong");
     }
 
     @GetMapping("")
@@ -56,5 +56,4 @@ public class TuVanController {
         tuVanService.deleteTuVan(id);
         return ResponseEntity.ok("delete thanh cong ! TT moi "+id);
     }
-
 }

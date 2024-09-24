@@ -2,9 +2,13 @@ package com.example.E4Center.controllers;
 
 
 import com.example.E4Center.Responses.LopHocResponse;
+import com.example.E4Center.Responses.NguoiDungResponse;
+import com.example.E4Center.Responses.ThoiKhoaBieuRespone;
 import com.example.E4Center.dtos.LopHocDTO;
 import com.example.E4Center.models.LopHoc;
+import com.example.E4Center.models.NguoiDung;
 import com.example.E4Center.services.LopHocService;
+import com.example.E4Center.services.ThoiKhoaBieuService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +25,19 @@ import java.util.List;
 public class LopHocController {
     private final LopHocService lophocService;
 
+    private final ThoiKhoaBieuService thoiKhoaBieuService;
+
+    // API lấy thời khóa biểu theo mã lớp học
+    @GetMapping("/{malop}/thoikhoabieu")
+    public ResponseEntity<List<ThoiKhoaBieuRespone>> getThoiKhoaBieuByLopHoc(@PathVariable Long malop) {
+        List<ThoiKhoaBieuRespone> thoiKhoaBieuList = thoiKhoaBieuService.getThoiKhoaBieuBylophoc(malop);
+        if (thoiKhoaBieuList.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(thoiKhoaBieuList);
+    }
+
+
     //Tìm lớp học theo id
     @GetMapping("/{id}")
     public ResponseEntity<LopHoc> getLopHocById(@PathVariable long id) throws Exception {
@@ -28,7 +45,13 @@ public class LopHocController {
         return ResponseEntity.ok(newLopHoc);
     }
 
-    @GetMapping("")
+    //lấy thông tin lớp kèm thôngg tin giảng viên và học viên
+    @GetMapping("/thongtinlopkemdanhsanhhocsinhvagiangvien/{malop}")
+    public LopHocResponse getLopHocDetails(@PathVariable Long malop) {
+        return lophocService.getLopHocDetails(malop);
+    }
+
+   @GetMapping("")
     public ResponseEntity<List<LopHocResponse>> getAllLopHoc(
     ) {
 

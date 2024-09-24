@@ -5,20 +5,19 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToMany;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Getter
 @Setter
 @Data
+
 public class NguoiDungResponse {
     private Long manguoidung;
     private String hoten;
@@ -30,4 +29,5 @@ public class NguoiDungResponse {
     private String tendangnhap;
     private String matkhau;
     private String tenchucvu;
+    private Long maloaichucvu;
 }

@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Data
@@ -32,4 +33,7 @@ public class LopHoc {
     @ManyToOne(optional=false)
     @JoinColumn(name = "makhoahoc", referencedColumnName = "makhoahoc")
     private KhoaHoc khoaHoc;
+
+    @OneToMany(mappedBy = "lopHoc")
+    private Set<NguoiLopHoc> nguoiLopHocs;
 }

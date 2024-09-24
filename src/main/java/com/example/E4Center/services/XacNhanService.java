@@ -1,7 +1,7 @@
 package com.example.E4Center.services;
 
 import com.example.E4Center.dtos.XacNhanDTO;
-import com.example.E4Center.iservices.IXacNhanService;
+import com.example.E4Center.services.iservices.IXacNhanService;
 import com.example.E4Center.models.XacNhan;
 import com.example.E4Center.repositories.XacNhanRepository;
 import lombok.RequiredArgsConstructor;

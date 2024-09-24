@@ -41,6 +41,10 @@ public class ChucVuService {
         return chucVuRepository.findById(id);
     }
 
+    public ChucVu getChucVuByTenchucvu(String tenchucvu) {
+        return chucVuRepository.findByTenchucvu(tenchucvu);
+    }
+
     public ChucVu createChucVu(ChucVuDTO chucVuDTO) {
         LoaiChucVu existingLoaiChucVu = loaiChucVuRepository.findById(chucVuDTO.getMaloaichucvu()).get();
 

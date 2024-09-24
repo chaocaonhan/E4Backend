@@ -29,12 +29,4 @@ public class ChucVu {
     @ManyToOne
     @JoinColumn(name = "maloaichucvu", referencedColumnName = "maloaichucvu")
     private LoaiChucVu loaiChucvu;
-
-    @ManyToMany
-    @JoinTable(
-            name = "tblnguoi_chucvu",
-            joinColumns = @JoinColumn(name = "machucvu"),
-            inverseJoinColumns = @JoinColumn(name = "manguoidung")
-    )
-    private Set<NguoiDung> nguoiDungSet = new HashSet<>();
 }

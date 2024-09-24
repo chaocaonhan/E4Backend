@@ -1,13 +1,14 @@
 package com.example.E4Center.services;
 
 import com.example.E4Center.dtos.TuVanDTO;
-import com.example.E4Center.iservices.ITuVanService;
+import com.example.E4Center.services.iservices.ITuVanService;
 import com.example.E4Center.models.TuVan;
 import com.example.E4Center.repositories.TuVanRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -20,6 +21,7 @@ public class TuVanService implements ITuVanService {
     public TuVan createTuVan(TuVanDTO tuVanDTO) {
         TuVan tuVan = new TuVan();
         mapper.map(tuVanDTO, tuVan);
+        tuVan.setNgaygui(LocalDate.now());
         return tuVanRepository.save(tuVan);
     }
 
@@ -41,7 +43,6 @@ public class TuVanService implements ITuVanService {
         existingTuVan.setNgaygui(tuVanDTO.getNgaygui());
         existingTuVan.setSdt(tuVanDTO.getSdt());
         existingTuVan.setNghenghiep(tuVanDTO.getNghenghiep());
-        existingTuVan.setCosogannhat(tuVanDTO.getCosogannhat());
         existingTuVan.setCauhoituvan(tuVanDTO.getCauhoituvan());
         existingTuVan.setTrangthai(tuVanDTO.getTrangthai());
         tuVanRepository.save(existingTuVan);

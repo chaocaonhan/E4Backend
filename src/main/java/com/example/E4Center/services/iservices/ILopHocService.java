@@ -1,4 +1,4 @@
-package com.example.E4Center.iservices;
+package com.example.E4Center.services.iservices;
 
 import com.example.E4Center.Responses.LopHocResponse;
 import com.example.E4Center.dtos.LopHocDTO;
@@ -13,4 +13,5 @@ public interface ILopHocService {
     LopHoc createLopHoc(LopHocDTO LopHoc) throws DataNotFoundException;;
     void deleteLopHocById(long MaLop);
     LopHoc updateLopHoc(long MaLop, LopHocDTO LopHoc) throws Exception;
+    public LopHocResponse getLopHocDetails(Long malop);
 }

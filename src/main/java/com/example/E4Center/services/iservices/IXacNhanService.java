@@ -1,4 +1,4 @@
-package com.example.E4Center.iservices;
+package com.example.E4Center.services.iservices;
 
 import com.example.E4Center.dtos.XacNhanDTO;
 import com.example.E4Center.models.XacNhan;

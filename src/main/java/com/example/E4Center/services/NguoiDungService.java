@@ -2,27 +2,29 @@ package com.example.E4Center.services;
 
 import com.example.E4Center.Responses.NguoiDungResponse;
 import com.example.E4Center.dtos.NguoiDungDTO;
-import com.example.E4Center.iservices.INguoiDungService;
+import com.example.E4Center.services.iservices.INguoiDungService;
 import com.example.E4Center.models.ChucVu;
 import com.example.E4Center.models.NguoiDung;
 import com.example.E4Center.repositories.ChucVuRepository;
 import com.example.E4Center.repositories.NguoiDungRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 
 public class NguoiDungService implements INguoiDungService {
     private final NguoiDungRepository nguoiDungRepository;
+    private final ModelMapper modelMapper;
+    private final ChucVuRepository chucVuRepository;
 
     @Override
     public NguoiDung createNguoiDung(NguoiDungDTO nguoiDungDTO) {
+
+        ChucVu chucVu = chucVuRepository.findByTenchucvu(nguoiDungDTO.getTenchucvu());
         NguoiDung nguoiDung = NguoiDung
                 .builder()
                 .hoten(nguoiDungDTO.getHoten())
@@ -33,6 +35,7 @@ public class NguoiDungService implements INguoiDungService {
                 .email(nguoiDungDTO.getEmail())
                 .tendangnhap(nguoiDungDTO.getTendangnhap())
                 .matkhau(nguoiDungDTO.getMatkhau())
+                .chucVu(chucVu)
                 .build();
 
         return nguoiDungRepository.save(nguoiDung);
@@ -45,8 +48,15 @@ public class NguoiDungService implements INguoiDungService {
     }
 
     @Override
-    public List<NguoiDung> getAllNguoiDung() {
-        return nguoiDungRepository.findAll();
+    public List<NguoiDungResponse> getAllNguoiDung() {
+        List<NguoiDung> nguoiDungList = nguoiDungRepository.findAll();
+
+        return nguoiDungList.stream().map(nguoiDung -> {
+            NguoiDungResponse response = modelMapper.map(nguoiDung, NguoiDungResponse.class);
+            response.setTenchucvu(nguoiDung.getChucVu().getTenchucvu());
+            response.setMaloaichucvu((long) nguoiDung.getChucVu().getLoaiChucvu().getMaloaichucvu());
+            return response;
+        }).toList();
     }
 
     @Override
@@ -73,28 +83,6 @@ public class NguoiDungService implements INguoiDungService {
     @Override
     public List<NguoiDung> getALLGiaoVien() {
         return null;
-    }
-
-    public Set<NguoiDungResponse> getNguoiDungByMachucvu(int machucvu) {
-        return nguoiDungRepository.findByMachucvu(machucvu).stream().map(nguoiDung -> {
-            // Lấy tên của tất cả chức vụ
-            String tenChucVu = nguoiDung.getChucVus().stream()
-                    .map(ChucVu::getTenchucvu)
-                    .collect(Collectors.joining(", "));
-
-            return NguoiDungResponse.builder()
-                    .manguoidung(nguoiDung.getManguoidung())
-                    .hoten(nguoiDung.getHoten())
-                    .ngaysinh(nguoiDung.getNgaysinh())
-                    .gioitinh(nguoiDung.getGioitinh())
-                    .sdt(nguoiDung.getSdt())
-                    .diachi(nguoiDung.getDiachi())
-                    .email(nguoiDung.getEmail())
-                    .tendangnhap(nguoiDung.getTendangnhap())
-                    .matkhau(nguoiDung.getMatkhau())
-                    .tenchucvu(tenChucVu) // Gán tên chức vụ ở đây
-                    .build();
-        }).collect(Collectors.toSet());
     }
 
 
