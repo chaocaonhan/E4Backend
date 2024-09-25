@@ -1,5 +1,6 @@
 package com.example.E4Center.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -46,9 +47,11 @@ public class XacNhan {
 
     @ManyToOne
     @JoinColumn(name = "malop")
+    @JsonIgnore
     private LopHoc lopHoc;
 
     @ManyToOne
     @JoinColumn(name = "maform")
+    @JsonIgnore
     private FormNhapHoc formNhapHoc;
 }
