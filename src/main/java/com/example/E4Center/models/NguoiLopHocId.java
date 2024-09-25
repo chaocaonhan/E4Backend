@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Embeddable
 
 public class NguoiLopHocId implements Serializable {
-    private Integer maNguoiDung;
-    private Integer maLop;
+    private Long maNguoiDung;
+    private Long maLop;
 }
 
