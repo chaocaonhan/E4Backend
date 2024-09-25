@@ -1,10 +1,9 @@
 package com.example.E4Center.services;
 
 import com.example.E4Center.Responses.LopHocResponse;
-import com.example.E4Center.Responses.NguoiDungResponse;
+import com.example.E4Center.Responses.NguoiDungInLopHocResponse;
 import com.example.E4Center.dtos.LopHocDTO;
 import com.example.E4Center.exceptions.DataNotFoundException;
-import com.example.E4Center.models.NguoiDung;
 import com.example.E4Center.repositories.NguoiLopHocRepository;
 import com.example.E4Center.services.iservices.ILopHocService;
 import com.example.E4Center.models.KhoaHoc;
@@ -46,16 +45,27 @@ public class LopHocService implements ILopHocService {
                 .tenkhoahoc(lopHoc.getKhoaHoc().getTenkhoahoc())
                 .hocvien(lopHoc.getNguoiLopHocs().stream()
                         .filter(nlh -> nlh.getNguoiDung().getChucVu().getMachucvu() == 1) // Filter students
-                        .map(nlh -> nlh.getNguoiDung().getHoten()) // Get student names
+                        .map(nlh -> new NguoiDungInLopHocResponse(
+                                nlh.getNguoiDung().getHoten(),
+                                nlh.getNguoiDung().getGioitinh(),
+                                nlh.getNguoiDung().getSdt(),
+                                nlh.getNguoiDung().getDiachi(),
+                                nlh.getNguoiDung().getEmail()))
                         .collect(Collectors.toList()))
                 .giangVien(lopHoc.getNguoiLopHocs().stream()
                         .filter(nlh -> nlh.getNguoiDung().getChucVu().getMachucvu() == 2) // Filter teachers
-                        .map(nlh -> nlh.getNguoiDung().getHoten()) // Get teacher names
+                        .map(nlh -> new NguoiDungInLopHocResponse(
+                                nlh.getNguoiDung().getHoten(),
+                                nlh.getNguoiDung().getGioitinh(),
+                                nlh.getNguoiDung().getSdt(),
+                                nlh.getNguoiDung().getDiachi(),
+                                nlh.getNguoiDung().getEmail()))
                         .collect(Collectors.toList()))
                 .build();
 
         return response;
     }
+
 
     @Override
     public List<LopHocResponse> getAllLopHoc() {
@@ -69,11 +79,21 @@ public class LopHocService implements ILopHocService {
                     .tenkhoahoc(lopHoc.getKhoaHoc().getTenkhoahoc())
                     .hocvien(lopHoc.getNguoiLopHocs().stream()
                             .filter(nlh -> nlh.getNguoiDung().getChucVu().getMachucvu() == 1) // Filter students
-                            .map(nlh -> nlh.getNguoiDung().getHoten()) // Get student names
+                            .map(nlh -> new NguoiDungInLopHocResponse(
+                                    nlh.getNguoiDung().getHoten(),
+                                    nlh.getNguoiDung().getGioitinh(),
+                                    nlh.getNguoiDung().getSdt(),
+                                    nlh.getNguoiDung().getDiachi(),
+                                    nlh.getNguoiDung().getEmail()))
                             .collect(Collectors.toList()))
                     .giangVien(lopHoc.getNguoiLopHocs().stream()
                             .filter(nlh -> nlh.getNguoiDung().getChucVu().getMachucvu() == 2) // Filter teachers
-                            .map(nlh -> nlh.getNguoiDung().getHoten()) // Get teacher names
+                            .map(nlh -> new NguoiDungInLopHocResponse(
+                                    nlh.getNguoiDung().getHoten(),
+                                    nlh.getNguoiDung().getGioitinh(),
+                                    nlh.getNguoiDung().getSdt(),
+                                    nlh.getNguoiDung().getDiachi(),
+                                    nlh.getNguoiDung().getEmail()))
                             .collect(Collectors.toList()))
                     .build();
         }).collect(Collectors.toList());

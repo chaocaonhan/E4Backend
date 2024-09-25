@@ -18,6 +18,6 @@ public class LopHocResponse {
     private String thoigianhoc;
     private String thuhoc;
     private String tenkhoahoc;
-    private List<String> hocvien;
-    private List<String> giangVien;
+    private List<NguoiDungInLopHocResponse> hocvien;
+    private List<NguoiDungInLopHocResponse> giangVien;
 }
