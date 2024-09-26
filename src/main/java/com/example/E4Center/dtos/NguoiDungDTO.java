@@ -12,7 +12,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NguoiDungDTO {
-
     private String hoten;
     private Date ngaysinh;
     private String gioitinh;
