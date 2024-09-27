@@ -12,7 +12,6 @@ import java.time.LocalTime;
 public class ThoiKhoaBieuRespone {
     private Long matkb;
     private Integer thuhoc;
-    private String cahoc;
     private LocalTime tgbatdau;
     private LocalTime tgketthuc;
     private String tenphonghoc;

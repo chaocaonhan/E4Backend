@@ -17,6 +17,7 @@ public class LopHocResponse {
     private Date ngaykhaigiang;
     private String thoigianhoc;
     private String thuhoc;
+    private String cahoc;
     private String tenkhoahoc;
     private List<NguoiDungInLopHocResponse> hocvien;
     private List<NguoiDungInLopHocResponse> giangVien;

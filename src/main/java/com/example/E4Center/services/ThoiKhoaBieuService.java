@@ -39,7 +39,6 @@ public class ThoiKhoaBieuService implements IThoiKhoaBieuService {
         ThoiKhoaBieuRespone response = new ThoiKhoaBieuRespone(
                 tkb.getMatkb(),
                 tkb.getThuhoc(),
-                tkb.getCahoc(),
                 tkb.getTgbatdau(),
                 tkb.getTgketthuc(),
                 tkb.getPhonghoc().getTenphong()
@@ -53,7 +52,6 @@ public class ThoiKhoaBieuService implements IThoiKhoaBieuService {
         return thoiKhoaBieuRepository.findAll().stream().map(thoiKhoaBieu -> {
             return new ThoiKhoaBieuRespone().builder()
                     .thuhoc(thoiKhoaBieu.getThuhoc())
-                    .cahoc(thoiKhoaBieu.getCahoc())
                     .tgbatdau(thoiKhoaBieu.getTgbatdau())
                     .tgketthuc(thoiKhoaBieu.getTgketthuc())
                     .tenphonghoc(thoiKhoaBieu.getPhonghoc().getTenphong())
@@ -66,7 +64,6 @@ public class ThoiKhoaBieuService implements IThoiKhoaBieuService {
     public ThoiKhoaBieu createThoiKhoaBieu(ThoiKhoaBieuDTO thoiKhoaBieuDTO) {
         ThoiKhoaBieu thoiKhoaBieu = ThoiKhoaBieu.builder()
                 .thuhoc(thoiKhoaBieuDTO.getThuhoc())
-                .cahoc(thoiKhoaBieuDTO.getCahoc())
                 .tgbatdau(thoiKhoaBieuDTO.getTgbatdau())
                 .tgketthuc(thoiKhoaBieuDTO.getTgketthuc())
                 .phonghoc(thoiKhoaBieuDTO.getPhonghoc())

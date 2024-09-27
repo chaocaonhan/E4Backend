@@ -42,6 +42,7 @@ public class LopHocService implements ILopHocService {
                 .ngaykhaigiang(lopHoc.getNgaykhaigiang())
                 .thoigianhoc(lopHoc.getThoigianhoc())
                 .thuhoc(lopHoc.getThuhoc())
+                .cahoc(lopHoc.getCahoc())
                 .tenkhoahoc(lopHoc.getKhoaHoc().getTenkhoahoc())
                 .hocvien(lopHoc.getNguoiLopHocs().stream()
                         .filter(nlh -> nlh.getNguoiDung().getChucVu().getMachucvu() == 1) // Filter students
@@ -76,6 +77,7 @@ public class LopHocService implements ILopHocService {
                     .ngaykhaigiang(lopHoc.getNgaykhaigiang())
                     .thoigianhoc(lopHoc.getThoigianhoc())
                     .thuhoc(lopHoc.getThuhoc())
+                    .cahoc(lopHoc.getCahoc())
                     .tenkhoahoc(lopHoc.getKhoaHoc().getTenkhoahoc())
                     .hocvien(lopHoc.getNguoiLopHocs().stream()
                             .filter(nlh -> nlh.getNguoiDung().getChucVu().getMachucvu() == 1) // Filter students

@@ -1,5 +1,4 @@
 package com.example.E4Center.config;
-
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
@@ -17,3 +16,4 @@ public class OpenApiConfig {
                 .servers(List.of(new Server().url("https://determined-freedom-production.up.railway.app/")));
     }
 }
+

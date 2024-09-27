@@ -19,8 +19,6 @@ public class ThoiKhoaBieu {
 
     private Integer thuhoc;
 
-    @Column(length = 10)
-    private String cahoc;
 
     private LocalTime tgbatdau;
 
