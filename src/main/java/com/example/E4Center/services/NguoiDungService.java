@@ -25,6 +25,9 @@ public class NguoiDungService implements INguoiDungService {
     public NguoiDung createNguoiDung(NguoiDungDTO nguoiDungDTO) {
 
         ChucVu chucVu = chucVuRepository.findByTenchucvu(nguoiDungDTO.getTenchucvu());
+        if (chucVu == null) {
+            throw new RuntimeException("Không tìm thấy chức vụ với tên: " + nguoiDungDTO.getTenchucvu());
+        }
         NguoiDung nguoiDung = NguoiDung
                 .builder()
                 .hoten(nguoiDungDTO.getHoten())
