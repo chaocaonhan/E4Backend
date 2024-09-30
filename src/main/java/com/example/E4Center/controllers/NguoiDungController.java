@@ -89,4 +89,9 @@ public class NguoiDungController {
         return ResponseEntity.ok("delete success");
     }
 
+    @GetMapping("/tenKhoaHoc")
+    public List<NguoiDung> getNguoiDungByChucVu(@RequestParam("tenKhoaHoc") String tenKhoaHoc) {
+        return nguoidungService.getUserByTenKhoaHoc(tenKhoaHoc);
+    }
+
 }

@@ -16,4 +16,3 @@ public class OpenApiConfig {
                 .servers(List.of(new Server().url("https://determined-freedom-production.up.railway.app/")));
     }
 }
-

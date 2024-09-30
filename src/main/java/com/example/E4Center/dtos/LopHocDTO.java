@@ -1,5 +1,7 @@
 package com.example.E4Center.dtos;
 
+import com.example.E4Center.models.NguoiDung;
+import com.example.E4Center.models.PhongHoc;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
@@ -27,9 +29,15 @@ public class LopHocDTO{
     @JsonProperty("thoigianhoc")
     private String thoigianhoc;
 
+    private String cahoc;
+
     @JsonProperty("thuhoc")
     private String thuhoc;
 
-    @JsonProperty("makhoahoc")
-    private Long makhoahoc;
+    @JsonProperty("tenkhoahoc")
+    private String tenkhoahoc;
+
+    private String giaovien;
+
+    private String phonghoc;
 }

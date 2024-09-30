@@ -50,6 +50,8 @@ public class NguoiDungService implements INguoiDungService {
                 .orElseThrow(() -> new RuntimeException("khong tim thay ng dung"));
     }
 
+
+
     @Override
     public List<NguoiDungResponse> getAllNguoiDung() {
         List<NguoiDung> nguoiDungList = nguoiDungRepository.findAll();
@@ -92,5 +94,19 @@ public class NguoiDungService implements INguoiDungService {
     @Override
     public List<NguoiDung> getAllHocVien() {
         return List.of();
+    }
+
+
+    private String extractIeltsPart(String input) {
+        if (input != null && input.contains("IELTS")) {
+            int index = input.indexOf("IELTS");
+            return input.substring(index);
+        }
+        return "";
+    }
+
+    public List<NguoiDung> getUserByTenKhoaHoc(String tenKhoaHoc) {
+            String chuVuCanTim=extractIeltsPart(tenKhoaHoc);
+            return nguoiDungRepository.findByTenKhoaHoc(chuVuCanTim);
     }
 }

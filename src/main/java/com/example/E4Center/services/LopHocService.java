@@ -2,17 +2,18 @@ package com.example.E4Center.services;
 
 import com.example.E4Center.Responses.LopHocResponse;
 import com.example.E4Center.Responses.NguoiDungInLopHocResponse;
+import com.example.E4Center.Responses.ThoiKhoaBieuRespone;
 import com.example.E4Center.dtos.LopHocDTO;
 import com.example.E4Center.exceptions.DataNotFoundException;
-import com.example.E4Center.repositories.NguoiLopHocRepository;
+import com.example.E4Center.models.*;
+import com.example.E4Center.repositories.*;
 import com.example.E4Center.services.iservices.ILopHocService;
-import com.example.E4Center.models.KhoaHoc;
-import com.example.E4Center.models.LopHoc;
-import com.example.E4Center.repositories.KhoaHocRepository;
-import com.example.E4Center.repositories.LopHocRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,7 +24,9 @@ public class LopHocService implements ILopHocService {
     private final LopHocRepository lopHocRepository;
     private final KhoaHocRepository khoaHocRepository;
     private final NguoiLopHocRepository nguoiLopHocRepository;
-
+    private final NguoiDungRepository nguoiDungRepository;
+    private final ThoiKhoaBieuRepository thoiKhoaBieuRepository;
+    private final PhongHocRepository phongHocRepository;
 
     @Override
     public LopHoc getLopHocById(long MaLop) throws Exception {
@@ -45,7 +48,7 @@ public class LopHocService implements ILopHocService {
                 .cahoc(lopHoc.getCahoc())
                 .tenkhoahoc(lopHoc.getKhoaHoc().getTenkhoahoc())
                 .hocvien(lopHoc.getNguoiLopHocs().stream()
-                        .filter(nlh -> nlh.getNguoiDung().getChucVu().getMachucvu() == 1) // Filter students
+                        .filter(nlh -> nlh.getNguoiDung().getChucVu().getLoaiChucvu().getMaloaichucvu() == 1) // Filter students
                         .map(nlh -> new NguoiDungInLopHocResponse(
                                 nlh.getNguoiDung().getHoten(),
                                 nlh.getNguoiDung().getGioitinh(),
@@ -54,7 +57,7 @@ public class LopHocService implements ILopHocService {
                                 nlh.getNguoiDung().getEmail()))
                         .collect(Collectors.toList()))
                 .giangVien(lopHoc.getNguoiLopHocs().stream()
-                        .filter(nlh -> nlh.getNguoiDung().getChucVu().getMachucvu() == 2) // Filter teachers
+                        .filter(nlh -> nlh.getNguoiDung().getChucVu().getLoaiChucvu().getMaloaichucvu() == 2) // Filter teachers
                         .map(nlh -> new NguoiDungInLopHocResponse(
                                 nlh.getNguoiDung().getHoten(),
                                 nlh.getNguoiDung().getGioitinh(),
@@ -89,7 +92,7 @@ public class LopHocService implements ILopHocService {
                                     nlh.getNguoiDung().getEmail()))
                             .collect(Collectors.toList()))
                     .giangVien(lopHoc.getNguoiLopHocs().stream()
-                            .filter(nlh -> nlh.getNguoiDung().getChucVu().getMachucvu() == 2) // Filter teachers
+                            .filter(nlh -> nlh.getNguoiDung().getChucVu().getLoaiChucvu().getMaloaichucvu()==2) // Filter teachers
                             .map(nlh -> new NguoiDungInLopHocResponse(
                                     nlh.getNguoiDung().getHoten(),
                                     nlh.getNguoiDung().getGioitinh(),
@@ -101,12 +104,16 @@ public class LopHocService implements ILopHocService {
         }).collect(Collectors.toList());
     }
 
+
+
     @Override
-    public LopHoc createLopHoc(LopHocDTO lopHocDTO) throws DataNotFoundException {
+    public ResponseEntity<String> createLopHoc(LopHocDTO lopHocDTO) throws DataNotFoundException {
         KhoaHoc existingKhoaHoc = khoaHocRepository
-                .findById(lopHocDTO.getMakhoahoc())
+                .findBytenkhoahoc(lopHocDTO.getTenkhoahoc())
                 .orElseThrow(() -> new DataNotFoundException(
-                        "Khong tim thay khoa hoc co ma la" + lopHocDTO.getMakhoahoc()));
+                        "Khong tim thay khoa hoc co ma la" + lopHocDTO.getTenkhoahoc()));
+
+        NguoiDung giaoVien = nguoiDungRepository.findNguoiDungByHoten(lopHocDTO.getGiaovien());
 
         LopHoc newLopHoc = LopHoc
                 .builder()
@@ -114,9 +121,50 @@ public class LopHocService implements ILopHocService {
                 .ngaykhaigiang(lopHocDTO.getNgaykhaigiang())
                 .thoigianhoc(lopHocDTO.getThoigianhoc())
                 .thuhoc(lopHocDTO.getThuhoc())
+                .cahoc(lopHocDTO.getCahoc())
                 .khoaHoc(existingKhoaHoc)
                 .build();
-        return lopHocRepository.save(newLopHoc);
+
+        lopHocRepository.save(newLopHoc);
+
+        NguoiLopHoc newNguoiLopHoc = new NguoiLopHoc();
+        newNguoiLopHoc.setNguoiDung(giaoVien);
+        newNguoiLopHoc.setLopHoc(newLopHoc);
+        newNguoiLopHoc.setDiem(null);
+        newNguoiLopHoc.setTrangThai("Đang Học");
+        nguoiLopHocRepository.save(newNguoiLopHoc);
+
+        PhongHoc phongHoc = phongHocRepository.findPhongHocByTenphong(lopHocDTO.getPhonghoc());
+
+        //lấy các thời khóa biểu đủ điều kiện
+        LocalTime tgbatdau=null,tgketthuc=null;
+
+        switch (lopHocDTO.getCahoc()) {
+            case "Sáng":
+                tgbatdau = LocalTime.parse("07:00");
+                tgketthuc = LocalTime.parse("10:00");
+                break;
+            case "Chiều":
+                tgbatdau = LocalTime.parse("13:00");
+                tgketthuc = LocalTime.parse("16:00");
+                break;
+            case "Tối":
+                tgbatdau = LocalTime.parse("18:00");
+                tgketthuc = LocalTime.parse("21:00");
+                break;
+        }
+
+        // Tách chuỗi thành danh sách số nguyên
+        List<Integer> thuHocList = Arrays.stream(lopHocDTO.getThuhoc().split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+        List<ThoiKhoaBieu> lstTKB = thoiKhoaBieuRepository.getAvaibleTKB(thuHocList,tgbatdau,tgketthuc,phongHoc.getMaphong());
+        for(ThoiKhoaBieu thoiKhoaBieu : lstTKB) {
+            thoiKhoaBieu.setLophoc(newLopHoc);
+            thoiKhoaBieuRepository.save(thoiKhoaBieu);
+        }
+
+        return ResponseEntity.ok("them thanh cong");
     }
 
     @Override
@@ -129,9 +177,9 @@ public class LopHocService implements ILopHocService {
         //co the su dung ModelMaper, ObjectMaper
 
             KhoaHoc existingKhoaHoc = khoaHocRepository
-                    .findById(lopHocDTO.getMakhoahoc())
+                    .findBytenkhoahoc(lopHocDTO.getTenkhoahoc())
                     .orElseThrow(() -> new DataNotFoundException(
-                            "Khong tim thay khoa hoc co ma la" + lopHocDTO.getMakhoahoc()));
+                            "Khong tim thay khoa hoc co ma la" + lopHocDTO.getTenkhoahoc()));
             existingLopHoc.setTenlophoc(lopHocDTO.getTenlophoc());
             existingLopHoc.setNgaykhaigiang(lopHocDTO.getNgaykhaigiang());
             existingLopHoc.setThoigianhoc(lopHocDTO.getThoigianhoc());
@@ -139,7 +187,6 @@ public class LopHocService implements ILopHocService {
             existingLopHoc.setKhoaHoc(existingKhoaHoc);
 
             return lopHocRepository.save(existingLopHoc);
-
     }
 
 

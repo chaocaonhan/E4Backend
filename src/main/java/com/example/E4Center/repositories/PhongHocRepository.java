@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PhongHocRepository extends JpaRepository<PhongHoc, Integer> {
+    public PhongHoc findPhongHocByTenphong(String tenphong);
 }

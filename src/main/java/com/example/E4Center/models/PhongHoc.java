@@ -15,7 +15,7 @@ public class PhongHoc {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer maphong;
+    private Long maphong;
 
     @Column(length = 255)
     private String tenphong;

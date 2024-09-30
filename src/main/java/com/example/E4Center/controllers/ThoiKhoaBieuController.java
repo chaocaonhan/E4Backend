@@ -8,7 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/thoikhoabieu")
@@ -28,10 +31,60 @@ public class ThoiKhoaBieuController {
         return thoikhoabieuService.getThoiKhoaById(id);
     }
 
-//    @PostMapping()
-//    public ThoiKhoaBieu createTKB(@RequestBody ThoiKhoaBieuDTO thoiKhoaBieuDTO){
-//        return thoikhoabieuService.createThoiKhoaBieu(thoiKhoaBieuDTO);
-//    }
+    @GetMapping("/phonghoctuongung")
+    public List<String> getAvailableRooms(@RequestParam(value = "thuHoc") String thuHoc,
+                                          @RequestParam String caHoc) {
+        LocalTime tgbatdau=null,tgketthuc=null;
+
+        switch (caHoc) {
+            case "Sáng":
+                tgbatdau = LocalTime.parse("07:00");
+                tgketthuc = LocalTime.parse("10:00");
+                break;
+            case "Chiều":
+                tgbatdau = LocalTime.parse("13:00");
+                tgketthuc = LocalTime.parse("16:00");
+                break;
+            case "Tối":
+                tgbatdau = LocalTime.parse("18:00");
+                tgketthuc = LocalTime.parse("21:00");
+                break;
+        }
+
+        // Tách chuỗi thành danh sách số nguyên
+        List<Integer> thuHocList = Arrays.stream(thuHoc.split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+        return thoikhoabieuService.getAvailableRooms(thuHocList, tgbatdau, tgketthuc);
+    }
+
+    @GetMapping("/laytkbtheophongvalopvaca")
+    public List<ThoiKhoaBieu> getAvailableTKB(@RequestParam(value = "thuHoc") String thuHoc,
+                                          @RequestParam String caHoc,
+                                        @RequestParam Long maphonghoc) {
+        LocalTime tgbatdau=null,tgketthuc=null;
+
+        switch (caHoc) {
+            case "Sáng":
+                tgbatdau = LocalTime.parse("07:00");
+                tgketthuc = LocalTime.parse("10:00");
+                break;
+            case "Chiều":
+                tgbatdau = LocalTime.parse("13:00");
+                tgketthuc = LocalTime.parse("16:00");
+                break;
+            case "Tối":
+                tgbatdau = LocalTime.parse("18:00");
+                tgketthuc = LocalTime.parse("21:00");
+                break;
+        }
+
+        // Tách chuỗi thành danh sách số nguyên
+        List<Integer> thuHocList = Arrays.stream(thuHoc.split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+        return thoikhoabieuService.getAvaibleTKB(thuHocList, tgbatdau, tgketthuc,maphonghoc);
+    }
 
 
 }

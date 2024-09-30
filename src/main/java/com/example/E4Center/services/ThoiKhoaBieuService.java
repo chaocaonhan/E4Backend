@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -80,4 +81,15 @@ public class ThoiKhoaBieuService implements IThoiKhoaBieuService {
     public void deleteThoiKhoaBieu(long MaThoiKhoaBieu) {
         thoiKhoaBieuRepository.deleteById(MaThoiKhoaBieu);
     }
-}
+
+    //lấy danh sách phòng trống theo ca học, thứ học
+    public List<String> getAvailableRooms(List<Integer> thuHoc, LocalTime tgbatdau, LocalTime tgketthuc) {
+        return thoiKhoaBieuRepository.findPhongHocWithConditions(thuHoc, tgbatdau, tgketthuc);
+    }
+
+    //lấy danh sách tkb
+    public List<ThoiKhoaBieu> getAvaibleTKB(List<Integer> thuHoc, LocalTime tgbatdau, LocalTime tgketthuc,Long maphonghoc){
+            return thoiKhoaBieuRepository.getAvaibleTKB(thuHoc, tgbatdau, tgketthuc, maphonghoc);
+        }
+    }
+
