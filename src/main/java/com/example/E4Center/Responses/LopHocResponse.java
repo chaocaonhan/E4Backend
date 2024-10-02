@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @Getter
@@ -19,6 +20,7 @@ public class LopHocResponse {
     private String thuhoc;
     private String cahoc;
     private String tenkhoahoc;
+    private Optional<String> tenphonghoc;
     private List<NguoiDungInLopHocResponse> hocvien;
     private List<NguoiDungInLopHocResponse> giangVien;
 }

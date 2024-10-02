@@ -40,4 +40,6 @@ public class LopHoc {
 
     @OneToMany(mappedBy = "lopHoc")
     private Set<NguoiLopHoc> nguoiLopHocs;
+
+
 }

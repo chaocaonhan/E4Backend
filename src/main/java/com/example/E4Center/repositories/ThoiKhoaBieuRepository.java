@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.sql.Time;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface ThoiKhoaBieuRepository extends JpaRepository<ThoiKhoaBieu, Long> {
     List<ThoiKhoaBieu> findByLophoc_Malop(Long malop);
@@ -30,6 +31,7 @@ public interface ThoiKhoaBieuRepository extends JpaRepository<ThoiKhoaBieu, Long
                                             @Param("tgketthuc") LocalTime tgketthuc);
 
 
+
     @Query("SELECT tkb FROM ThoiKhoaBieu tkb " +
             "WHERE tkb.thuhoc IN :thuHoc " +  // Tham số thứ học
             "AND tkb.lophoc IS NULL " +  // Lớp học chưa được gán
@@ -40,6 +42,9 @@ public interface ThoiKhoaBieuRepository extends JpaRepository<ThoiKhoaBieu, Long
                                                   @Param("tgbatdau") LocalTime tgbatdau,
                                                   @Param("tgketthuc") LocalTime tgketthuc,
                                                   @Param("maphonghoc") Long maphonghoc);
+
+    @Query("SELECT DISTINCT tkb.phonghoc.tenphong FROM ThoiKhoaBieu tkb WHERE tkb.lophoc.malop = :malop")
+    Optional<String> findDistinctTenPhongByMaLop(@Param("malop") Long malop);
 
 
 }

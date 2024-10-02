@@ -82,6 +82,7 @@ public class LopHocService implements ILopHocService {
                     .thuhoc(lopHoc.getThuhoc())
                     .cahoc(lopHoc.getCahoc())
                     .tenkhoahoc(lopHoc.getKhoaHoc().getTenkhoahoc())
+                    .tenphonghoc(thoiKhoaBieuRepository.findDistinctTenPhongByMaLop(lopHoc.getMalop()))
                     .hocvien(lopHoc.getNguoiLopHocs().stream()
                             .filter(nlh -> nlh.getNguoiDung().getChucVu().getMachucvu() == 1) // Filter students
                             .map(nlh -> new NguoiDungInLopHocResponse(
@@ -100,6 +101,10 @@ public class LopHocService implements ILopHocService {
                                     nlh.getNguoiDung().getDiachi(),
                                     nlh.getNguoiDung().getEmail()))
                             .collect(Collectors.toList()))
+
+
+
+
                     .build();
         }).collect(Collectors.toList());
     }
