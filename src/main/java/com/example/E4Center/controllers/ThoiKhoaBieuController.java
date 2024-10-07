@@ -2,6 +2,7 @@ package com.example.E4Center.controllers;
 
 import com.example.E4Center.Responses.ThoiKhoaBieuRespone;
 import com.example.E4Center.dtos.ThoiKhoaBieuDTO;
+import com.example.E4Center.models.NguoiDung;
 import com.example.E4Center.models.ThoiKhoaBieu;
 import com.example.E4Center.services.ThoiKhoaBieuService;
 import lombok.RequiredArgsConstructor;
@@ -86,5 +87,14 @@ public class ThoiKhoaBieuController {
         return thoikhoabieuService.getAvaibleTKB(thuHocList, tgbatdau, tgketthuc,maphonghoc);
     }
 
+    @GetMapping("/tim-giao-vien-ranh")
+    public List<NguoiDung> timGiaoVienRanh(@RequestParam(value = "thuHoc") String thuHoc, @RequestParam String caHoc) {
 
+        // Tách chuỗi thành danh sách số nguyên
+        List<Integer> thuHocLst = Arrays.stream(thuHoc.split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+
+        return thoikhoabieuService.timGiaoVienRanh(thuHocLst, caHoc);
+    }
 }

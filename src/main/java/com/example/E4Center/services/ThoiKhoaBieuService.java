@@ -2,6 +2,7 @@ package com.example.E4Center.services;
 
 import com.example.E4Center.Responses.ThoiKhoaBieuRespone;
 import com.example.E4Center.dtos.ThoiKhoaBieuDTO;
+import com.example.E4Center.models.NguoiDung;
 import com.example.E4Center.services.iservices.IThoiKhoaBieuService;
 import com.example.E4Center.models.ThoiKhoaBieu;
 import com.example.E4Center.repositories.ThoiKhoaBieuRepository;
@@ -90,6 +91,32 @@ public class ThoiKhoaBieuService implements IThoiKhoaBieuService {
     //lấy danh sách tkb
     public List<ThoiKhoaBieu> getAvaibleTKB(List<Integer> thuHoc, LocalTime tgbatdau, LocalTime tgketthuc,Long maphonghoc){
             return thoiKhoaBieuRepository.getAvaibleTKB(thuHoc, tgbatdau, tgketthuc, maphonghoc);
+    }
+
+    public List<NguoiDung> timGiaoVienRanh(List<Integer> thuHoc, String caHoc) {
+        LocalTime tgbatdau;
+        LocalTime tgketthuc;
+        // Chuyển đổi ca học thành thời gian bắt đầu và kết thúc
+        switch (caHoc) {
+            case "Sáng":
+                tgbatdau = LocalTime.parse("07:00");
+                tgketthuc = LocalTime.parse("10:00");
+                break;
+            case "Chiều":
+                tgbatdau = LocalTime.parse("13:00");
+                tgketthuc = LocalTime.parse("16:00");
+                break;
+            case "Tối":
+                tgbatdau = LocalTime.parse("18:00");
+                tgketthuc = LocalTime.parse("21:00");
+                break;
+            default:
+                throw new IllegalArgumentException("Ca học không hợp lệ!");
         }
+
+        // Truy vấn tìm giáo viên rảnh
+        return thoiKhoaBieuRepository.findGiaoVienRanh(thuHoc, tgbatdau, tgketthuc);
+    }
+
     }
 

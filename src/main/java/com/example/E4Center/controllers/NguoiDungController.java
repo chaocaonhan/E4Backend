@@ -4,8 +4,9 @@ package com.example.E4Center.controllers;
 import com.example.E4Center.Responses.NguoiDungResponse;
 import com.example.E4Center.dtos.NguoiDungDTO;
 import com.example.E4Center.models.NguoiDung;
-import com.example.E4Center.services.ChucVuService;
+import com.example.E4Center.repositories.NguoiDungRepository;
 import com.example.E4Center.services.NguoiDungService;
+import com.example.E4Center.services.ThoiKhoaBieuService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +25,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class NguoiDungController {
     private final NguoiDungService nguoidungService;
+    private final NguoiDungRepository nguoiDungRepository;
+    private final ThoiKhoaBieuService thoiKhoaBieuService;
 
     @PostMapping()
     public ResponseEntity<?> createNguoiDung(
@@ -62,6 +67,7 @@ public class NguoiDungController {
 
         return ResponseEntity.ok(sinhVienList);
     }
+    
 
     @GetMapping("/getAllGiaoVien")
     public ResponseEntity<List<NguoiDungResponse>> getNguoiDungGiaoVien() {
@@ -89,9 +95,32 @@ public class NguoiDungController {
         return ResponseEntity.ok("delete success");
     }
 
-    @GetMapping("/tenKhoaHoc")
-    public List<NguoiDung> getNguoiDungByChucVu(@RequestParam("tenKhoaHoc") String tenKhoaHoc) {
-        return nguoidungService.getUserByTenKhoaHoc(tenKhoaHoc);
+
+    @GetMapping("/giaovientronglich")
+    public List<String> getGiaoVienTrongLich(@RequestParam("tenKhoaHoc") String tenKhoaHoc,
+                                             @RequestParam(value = "thuHoc") String thuHoc,
+                                             @RequestParam String caHoc){
+        List<NguoiDung> giaoVienCoTrinhDoTuongUngVoiKhoa = nguoidungService.getUserByTenKhoaHoc(tenKhoaHoc);
+
+        List<Integer> thuHocLst = Arrays.stream(thuHoc.split(","))
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+        List<NguoiDung> giaoVienTrongLich = thoiKhoaBieuService.timGiaoVienRanh(thuHocLst,caHoc);
+
+        List<String> ketQua = new ArrayList<>();
+
+        for (NguoiDung gv : giaoVienCoTrinhDoTuongUngVoiKhoa) {
+            if (giaoVienTrongLich.contains(gv)) {
+                // Giáo viên trống lịch
+                ketQua.add(gv.getHoten()+ " - Trống lịch");
+            } else {
+                // Giáo viên trùng lịch
+                ketQua.add(gv.getHoten() + " - Trùng lịch");
+            }
+        }
+        return ketQua;
     }
+
+
 
 }

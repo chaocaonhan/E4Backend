@@ -3,6 +3,7 @@ package com.example.E4Center.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.modelmapper.internal.bytebuddy.implementation.bind.annotation.DefaultMethodHandle;
 
 import java.util.Date;
 
@@ -13,6 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+
 @Table(name = "tblxacnhan")
 public class XacNhan {
 

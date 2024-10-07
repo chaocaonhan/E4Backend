@@ -118,7 +118,9 @@ public class LopHocService implements ILopHocService {
                 .orElseThrow(() -> new DataNotFoundException(
                         "Khong tim thay khoa hoc co ma la" + lopHocDTO.getTenkhoahoc()));
 
-        NguoiDung giaoVien = nguoiDungRepository.findNguoiDungByHoten(lopHocDTO.getGiaovien());
+        //tách tên gv ra khỏi chuỗi
+        String  tengiaovien = lopHocDTO.getGiaovien().split(" - ")[0];
+        NguoiDung giaoVien = nguoiDungRepository.findNguoiDungByHoten(tengiaovien);
 
         LopHoc newLopHoc = LopHoc
                 .builder()

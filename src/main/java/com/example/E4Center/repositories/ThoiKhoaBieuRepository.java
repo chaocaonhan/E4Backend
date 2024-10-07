@@ -1,6 +1,7 @@
 package com.example.E4Center.repositories;
 
 import com.example.E4Center.Responses.ThoiKhoaBieuRespone;
+import com.example.E4Center.models.NguoiDung;
 import com.example.E4Center.models.PhongHoc;
 import com.example.E4Center.models.ThoiKhoaBieu;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,13 +20,12 @@ public interface ThoiKhoaBieuRepository extends JpaRepository<ThoiKhoaBieu, Long
     @Query(value = "SELECT DISTINCT p.tenphong " +
             "FROM PhongHoc p " +
             "JOIN ThoiKhoaBieu tkb ON p.maphong = tkb.phonghoc.maphong " +
-            "WHERE tkb.thuhoc IN :thuHoc " +  // Tham số thứ học
-            "AND tkb.lophoc IS NULL " +
+            "WHERE tkb.thuhoc IN :thuHoc " +
             "AND tkb.tgbatdau = :tgbatdau " +
             "AND tkb.tgketthuc = :tgketthuc " +
             "GROUP BY p.tenphong, tkb.phonghoc.maphong " +
             "HAVING COUNT(DISTINCT tkb.thuhoc) = (SELECT COUNT(DISTINCT thuhoc) FROM ThoiKhoaBieu WHERE thuhoc IN :thuHoc)",
-            nativeQuery = false)  // Nếu bạn viết JPQL, thì nativeQuery là false
+            nativeQuery = false)
     List<String> findPhongHocWithConditions(@Param("thuHoc") List<Integer> thuHoc,
                                             @Param("tgbatdau") LocalTime tgbatdau,
                                             @Param("tgketthuc") LocalTime tgketthuc);
@@ -47,4 +47,14 @@ public interface ThoiKhoaBieuRepository extends JpaRepository<ThoiKhoaBieu, Long
     Optional<String> findDistinctTenPhongByMaLop(@Param("malop") Long malop);
 
 
+    // Truy vấn để tìm những giáo viên không có lịch trong các khoảng thời gian của các thứ học được chỉ định
+    @Query("SELECT nd FROM NguoiDung nd WHERE nd.chucVu.tenchucvu LIKE '%Giáo Viên%' AND " +
+            "NOT EXISTS (SELECT tkb FROM ThoiKhoaBieu tkb WHERE tkb.lophoc IN " +
+            "(SELECT nl.lopHoc FROM NguoiLopHoc nl WHERE nl.nguoiDung = nd) " +
+            "AND tkb.thuhoc IN :thuHoc " +
+            "AND ((tkb.tgbatdau = :tgbatdau) " +
+            "AND (tkb.tgketthuc = :tgketthuc)))")
+    List<NguoiDung> findGiaoVienRanh(@Param("thuHoc") List<Integer> thuHoc,
+                                     @Param("tgbatdau") LocalTime tgbatdau,
+                                     @Param("tgketthuc") LocalTime tgketthuc);
 }
