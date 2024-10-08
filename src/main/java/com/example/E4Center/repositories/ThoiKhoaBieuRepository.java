@@ -17,18 +17,20 @@ public interface ThoiKhoaBieuRepository extends JpaRepository<ThoiKhoaBieu, Long
     List<ThoiKhoaBieu> findByLophoc_Malop(Long malop);
 
 
-    @Query(value = "SELECT DISTINCT p.tenphong " +
-            "FROM PhongHoc p " +
-            "JOIN ThoiKhoaBieu tkb ON p.maphong = tkb.phonghoc.maphong " +
-            "WHERE tkb.thuhoc IN :thuHoc " +
-            "AND tkb.tgbatdau = :tgbatdau " +
-            "AND tkb.tgketthuc = :tgketthuc " +
-            "GROUP BY p.tenphong, tkb.phonghoc.maphong " +
-            "HAVING COUNT(DISTINCT tkb.thuhoc) = (SELECT COUNT(DISTINCT thuhoc) FROM ThoiKhoaBieu WHERE thuhoc IN :thuHoc)",
-            nativeQuery = false)
-    List<String> findPhongHocWithConditions(@Param("thuHoc") List<Integer> thuHoc,
-                                            @Param("tgbatdau") LocalTime tgbatdau,
-                                            @Param("tgketthuc") LocalTime tgketthuc);
+
+@Query(value = "SELECT DISTINCT p.tenphong " +
+        "FROM PhongHoc p " +
+        "JOIN ThoiKhoaBieu tkb ON p.maphong = tkb.phonghoc.maphong " +
+        "WHERE tkb.thuhoc IN :thuHoc " +
+        "AND tkb.tgbatdau = :tgbatdau " +
+        "AND tkb.tgketthuc = :tgketthuc " +
+        "AND tkb.lophoc IS NULL " +  // Điều kiện thêm vào để kiểm tra thời khoá biểu trống
+        "GROUP BY p.tenphong, tkb.phonghoc.maphong " +
+        "HAVING COUNT(DISTINCT tkb.thuhoc) = (SELECT COUNT(DISTINCT thuhoc) FROM ThoiKhoaBieu WHERE thuhoc IN :thuHoc)",
+        nativeQuery = false)
+List<String> findPhongHocWithConditions(@Param("thuHoc") List<Integer> thuHoc,
+                                        @Param("tgbatdau") LocalTime tgbatdau,
+                                        @Param("tgketthuc") LocalTime tgketthuc);
 
 
 
