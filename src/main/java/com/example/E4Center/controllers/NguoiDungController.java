@@ -128,5 +128,11 @@ public class NguoiDungController {
         return ResponseEntity.ok(schedule);
     }
 
+    @PutMapping("/settendangnhap")
+    public ResponseEntity<String> updateTenDangNhap(){
+        nguoidungService.updateAllUsernames();
+        return ResponseEntity.ok("update success");
+    }
+
 
 }

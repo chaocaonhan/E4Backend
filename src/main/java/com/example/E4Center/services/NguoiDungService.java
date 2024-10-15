@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.text.Normalizer;
 import java.util.List;
 
 @Service
@@ -109,4 +110,28 @@ public class NguoiDungService implements INguoiDungService {
             String chuVuCanTim=extractIeltsPart(tenKhoaHoc);
             return nguoiDungRepository.findByTenKhoaHoc(chuVuCanTim);
     }
+
+
+
+    @Override
+    public void updateAllUsernames() {
+        // Lấy danh sách tất cả người dùng
+        List<NguoiDung> nguoiDungList = nguoiDungRepository.findAll();
+
+        // Cập nhật tên đăng nhập cho từng người dùng
+        nguoiDungList.forEach(nguoiDung -> {
+            // Chuẩn hóa tên để tạo tên đăng nhập
+            String username = Normalizer.normalize(nguoiDung.getHoten(), Normalizer.Form.NFD)
+                    .replaceAll("\\p{M}", "") // Loại bỏ dấu
+                    .toLowerCase()            // Chuyển thành chữ thường
+                    .replaceAll("\\s+", "");  // Loại bỏ khoảng trắng
+
+            // Cập nhật tên đăng nhập mới
+            nguoiDung.setTendangnhap(username);
+        });
+
+        // Lưu lại tất cả các thay đổi
+        nguoiDungRepository.saveAll(nguoiDungList);
+    }
+
 }

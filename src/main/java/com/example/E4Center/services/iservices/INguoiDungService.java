@@ -15,4 +15,6 @@ public interface INguoiDungService {
 
     List<NguoiDung> getALLGiaoVien();
     List<NguoiDung> getAllHocVien();
+
+    void updateAllUsernames();
 }
