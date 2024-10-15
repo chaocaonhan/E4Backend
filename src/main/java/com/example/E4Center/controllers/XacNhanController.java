@@ -2,7 +2,9 @@ package com.example.E4Center.controllers;
 
 
 import com.example.E4Center.dtos.XacNhanDTO;
+import com.example.E4Center.models.LopHoc;
 import com.example.E4Center.models.XacNhan;
+import com.example.E4Center.services.LopHocService;
 import com.example.E4Center.services.XacNhanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,21 +20,22 @@ import java.util.List;
 public class XacNhanController {
 
     private final XacNhanService xacNhanService;
+    private final LopHocService lopHocService;
 
-    @PostMapping("")
-    public ResponseEntity<?> createXacNhan(@RequestBody XacNhanDTO xacNhanDTO,
-                                           BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
-            List<String> errorMessages = bindingResult.getFieldErrors()
-                    .stream()
-                    .map(FieldError::getDefaultMessage)
-                    .toList();
-            return ResponseEntity.badRequest().body(errorMessages);
-
-        }
-        xacNhanService.createXacNhan(xacNhanDTO);
-        return ResponseEntity.ok(xacNhanDTO);
-    }
+//    @PostMapping("")
+//    public ResponseEntity<?> createXacNhan(@RequestBody XacNhanDTO xacNhanDTO,
+//                                           BindingResult bindingResult) {
+//        if(bindingResult.hasErrors()) {
+//            List<String> errorMessages = bindingResult.getFieldErrors()
+//                    .stream()
+//                    .map(FieldError::getDefaultMessage)
+//                    .toList();
+//            return ResponseEntity.badRequest().body(errorMessages);
+//
+//        }
+//        xacNhanService.createXacNhan(xacNhanDTO);
+//        return ResponseEntity.ok(xacNhanDTO);
+//    }
 
     @GetMapping("")
     public ResponseEntity<List<XacNhan>> getAllXacNhan() {

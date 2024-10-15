@@ -1,14 +1,11 @@
 package com.example.E4Center.services;
 
 import com.example.E4Center.dtos.XacNhanDTO;
-import com.example.E4Center.models.ChucVu;
-import com.example.E4Center.models.NguoiDung;
-import com.example.E4Center.models.NguoiLopHoc;
+import com.example.E4Center.models.*;
 import com.example.E4Center.repositories.ChucVuRepository;
 import com.example.E4Center.repositories.NguoiDungRepository;
 import com.example.E4Center.repositories.NguoiLopHocRepository;
 import com.example.E4Center.services.iservices.IXacNhanService;
-import com.example.E4Center.models.XacNhan;
 import com.example.E4Center.repositories.XacNhanRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -26,13 +23,14 @@ public class XacNhanService implements IXacNhanService {
     private final NguoiLopHocRepository nguoiLopHocRepository;
     private final ModelMapper mapper;
     private final ChucVuRepository chucVuRepository;
+    private final LopHocService lopHocService;
 
-    @Override
-    public XacNhan createXacNhan(XacNhanDTO xacNhanDTO) {
-        XacNhan xacNhan = new XacNhan();
-        mapper.map(xacNhanDTO, xacNhan);
-        return xacNhanRepository.save(xacNhan);
-    }
+//    @Override
+//    public XacNhan createXacNhan(XacNhanDTO xacNhanDTO) {
+//        XacNhan xacNhan = new XacNhan();
+//        mapper.map(xacNhanDTO, xacNhan);
+//        return xacNhanRepository.save(xacNhan);
+//    }
 
     @Override
     public XacNhan getXacNhanById(Long MaXacNhan) {
@@ -50,6 +48,9 @@ public class XacNhanService implements IXacNhanService {
         XacNhan existingXacNhan = getXacNhanById(MaXacNhan);
         String oldTrangThai = existingXacNhan.getTrangthai(); // Get the old status
         mapper.map(xacNhanDTO, existingXacNhan);
+
+        LopHoc lopHoc = lopHocService.getLopHocByTenLop(xacNhanDTO.getTenlophoc());
+        existingXacNhan.setLopHoc(lopHoc);
 
 
         // Check if trangthai changed from "Chờ Xét Duyệt" to "Hoàn thành"

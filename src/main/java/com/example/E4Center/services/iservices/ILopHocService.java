@@ -15,4 +15,6 @@ public interface ILopHocService {
     ResponseEntity<String> deleteLopHocById(long MaLop);
     LopHoc updateLopHoc(long MaLop, LopHocDTO LopHoc) throws Exception;
     public LopHocResponse getLopHocDetails(Long malop);
+
+    LopHoc getLopHocByTenLop(String tenLop);
 }

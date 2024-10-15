@@ -72,8 +72,9 @@ public class FormNhapHocService implements IFormNhapHocService {
             newXacNhan.setDiachi(existingForm.getDiachi());
             newXacNhan.setEmail(existingForm.getEmail());
             newXacNhan.setNgaygui(existingForm.getNgaygui());
-            newXacNhan.setTrangthai("Chờ đóng tiền");
+            newXacNhan.setTrangthai("Chờ Xác Nhận");
             newXacNhan.setLopHoc(null);
+            newXacNhan.setFormNhapHoc(existingForm);
             xacNhanRepository.save(newXacNhan);
         }
 

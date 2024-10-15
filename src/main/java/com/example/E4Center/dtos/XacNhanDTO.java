@@ -20,9 +20,7 @@ public class XacNhanDTO {
     private Date ngaygui;
     private String trangthai;
 
-//    @JsonProperty("malop")
-    private Long maform;
 
 //    @JsonProperty("malop")
-    private long malop;
+    private String tenlophoc;
 }

@@ -2,6 +2,7 @@ package com.example.E4Center.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.modelmapper.internal.bytebuddy.implementation.bind.annotation.DefaultMethodHandle;
@@ -57,4 +58,14 @@ public class XacNhan {
     @JoinColumn(name = "maform")
     @JsonIgnore
     private FormNhapHoc formNhapHoc;
+
+    @JsonProperty("tenkhoahoc")
+    public String getTenKhoaHoc() {
+        return formNhapHoc != null ? formNhapHoc.getTenkhoahoc() : null;
+    }
+
+    @JsonProperty("tenlophoc")
+    public String getTenLopHoc() {
+        return lopHoc != null ? lopHoc.getTenlophoc() : null;
+    }
 }

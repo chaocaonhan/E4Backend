@@ -2,7 +2,6 @@ package com.example.E4Center.services;
 
 import com.example.E4Center.Responses.LopHocResponse;
 import com.example.E4Center.Responses.NguoiDungInLopHocResponse;
-import com.example.E4Center.Responses.ThoiKhoaBieuRespone;
 import com.example.E4Center.dtos.LopHocDTO;
 import com.example.E4Center.exceptions.DataNotFoundException;
 import com.example.E4Center.models.*;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -101,10 +99,6 @@ public class LopHocService implements ILopHocService {
                                     nlh.getNguoiDung().getDiachi(),
                                     nlh.getNguoiDung().getEmail()))
                             .collect(Collectors.toList()))
-
-
-
-
                     .build();
         }).collect(Collectors.toList());
     }
@@ -124,7 +118,6 @@ public class LopHocService implements ILopHocService {
         if (giaoVien == null) {
             throw new DataNotFoundException("Không tìm thấy giáo viên : " + tengiaovien);
         }
-
 
         LopHoc newLopHoc = LopHoc
                 .builder()
@@ -208,5 +201,10 @@ public class LopHocService implements ILopHocService {
             lopHocRepository.deleteById(MaLop);
         return ResponseEntity.ok("Xóa thành công");
         }
+
+    @Override
+    public LopHoc getLopHocByTenLop(String tenLop){
+        return lopHocRepository.findBytenlophoc(tenLop);
+    }
 }
 
