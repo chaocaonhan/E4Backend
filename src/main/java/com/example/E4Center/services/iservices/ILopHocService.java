@@ -12,7 +12,7 @@ public interface ILopHocService {
     LopHoc getLopHocById(long MaLop) throws Exception;
     List<LopHocResponse> getAllLopHoc();
     ResponseEntity<String> createLopHoc(LopHocDTO LopHoc) throws DataNotFoundException;;
-    void deleteLopHocById(long MaLop);
+    ResponseEntity<String> deleteLopHocById(long MaLop);
     LopHoc updateLopHoc(long MaLop, LopHocDTO LopHoc) throws Exception;
     public LopHocResponse getLopHocDetails(Long malop);
 }

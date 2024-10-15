@@ -1,10 +1,14 @@
 package com.example.E4Center.services;
 
 import com.example.E4Center.dtos.FormNhapHocDTO;
+import com.example.E4Center.models.XacNhan;
+import com.example.E4Center.repositories.XacNhanRepository;
 import com.example.E4Center.services.iservices.IFormNhapHocService;
 import com.example.E4Center.models.FormNhapHoc;
 import com.example.E4Center.repositories.FormNhapHocRepository;
+import jakarta.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +19,8 @@ import java.util.List;
 public class FormNhapHocService implements IFormNhapHocService {
 
     private final FormNhapHocRepository formNhapHocRepository;
+    private final XacNhanRepository xacNhanRepository;
+
     @Override
     public FormNhapHoc createFormNhapHoc(FormNhapHocDTO formNhapHocDTO) {
         FormNhapHoc formNhapHoc = FormNhapHoc
@@ -39,13 +45,14 @@ public class FormNhapHocService implements IFormNhapHocService {
 
     @Override
     public List<FormNhapHoc> getAllFormNhapHoc() {
-
         return formNhapHocRepository.findAll();
     }
 
     @Override
     public FormNhapHoc updateFormNhapHoc(long maForm, FormNhapHocDTO formNhapHocDTO) {
         FormNhapHoc existingForm = getFormNhapHocById(maForm);
+        String oldStatus = existingForm.getTrangthai();
+
         existingForm.setHoten(formNhapHocDTO.getHoten());
         existingForm.setNgaysinh(formNhapHocDTO.getNgaysinh());
         existingForm.setGioitinh(formNhapHocDTO.getGioitinh());
@@ -53,9 +60,22 @@ public class FormNhapHocService implements IFormNhapHocService {
         existingForm.setTenkhoahoc(formNhapHocDTO.getTenkhoahoc());
         existingForm.setDiachi(formNhapHocDTO.getDiachi());
         existingForm.setEmail(formNhapHocDTO.getEmail());
-        existingForm.setEmail(formNhapHocDTO.getEmail());
         existingForm.setNgaygui(formNhapHocDTO.getNgaygui());
         existingForm.setTrangthai(formNhapHocDTO.getTrangthai());
+
+        if(oldStatus.equals("Chờ Xét Duyệt")&&existingForm.getTrangthai().equals("Hoàn Thành")){
+            XacNhan newXacNhan = new XacNhan();
+            newXacNhan.setHoten(existingForm.getHoten());
+            newXacNhan.setNgaysinh(existingForm.getNgaysinh());
+            newXacNhan.setGioitinh(existingForm.getGioitinh());
+            newXacNhan.setSdt(existingForm.getSdt());
+            newXacNhan.setDiachi(existingForm.getDiachi());
+            newXacNhan.setEmail(existingForm.getEmail());
+            newXacNhan.setNgaygui(existingForm.getNgaygui());
+            newXacNhan.setTrangthai("Chờ đóng tiền");
+            newXacNhan.setLopHoc(null);
+            xacNhanRepository.save(newXacNhan);
+        }
 
         formNhapHocRepository.save(existingForm);
         return existingForm;

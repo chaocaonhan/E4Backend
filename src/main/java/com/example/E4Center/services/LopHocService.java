@@ -121,6 +121,10 @@ public class LopHocService implements ILopHocService {
         //tách tên gv ra khỏi chuỗi
         String  tengiaovien = lopHocDTO.getGiaovien().split(" - ")[0];
         NguoiDung giaoVien = nguoiDungRepository.findNguoiDungByHoten(tengiaovien);
+        if (giaoVien == null) {
+            throw new DataNotFoundException("Không tìm thấy giáo viên : " + tengiaovien);
+        }
+
 
         LopHoc newLopHoc = LopHoc
                 .builder()
@@ -198,12 +202,11 @@ public class LopHocService implements ILopHocService {
 
 
     @Override
-    public void deleteLopHocById(long MaLop) {
-        Optional<LopHoc> optionalLopHoc = lopHocRepository.findById(MaLop);
-        System.out.println(optionalLopHoc);
-        if (optionalLopHoc.isPresent()) {
-            lopHocRepository.delete(optionalLopHoc.get());
+    public ResponseEntity<String> deleteLopHocById(long MaLop) {
+            nguoiLopHocRepository.deleteByMaLop(MaLop);
+            thoiKhoaBieuRepository.updateMalopToNull(MaLop);
+            lopHocRepository.deleteById(MaLop);
+        return ResponseEntity.ok("Xóa thành công");
         }
-    }
 }
 

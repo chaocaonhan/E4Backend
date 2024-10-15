@@ -5,6 +5,7 @@ import com.example.E4Center.models.NguoiDung;
 import com.example.E4Center.models.PhongHoc;
 import com.example.E4Center.models.ThoiKhoaBieu;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -59,4 +60,12 @@ List<String> findPhongHocWithConditions(@Param("thuHoc") List<Integer> thuHoc,
     List<NguoiDung> findGiaoVienRanh(@Param("thuHoc") List<Integer> thuHoc,
                                      @Param("tgbatdau") LocalTime tgbatdau,
                                      @Param("tgketthuc") LocalTime tgketthuc);
+
+    //set mã lớp thành null
+    @Modifying
+    @Query("UPDATE ThoiKhoaBieu t SET t.lophoc = NULL WHERE t.lophoc.malop = :malop")
+    void updateMalopToNull(@Param("malop") Long malop);
+
+    @Query("SELECT tkb FROM ThoiKhoaBieu tkb JOIN tkb.lophoc lh JOIN lh.nguoiLopHocs nlh WHERE nlh.nguoiDung.manguoidung = :maNguoiDung")
+    List<ThoiKhoaBieu> findScheduleByUserId(@Param("maNguoiDung") Long maNguoiDung);
 }

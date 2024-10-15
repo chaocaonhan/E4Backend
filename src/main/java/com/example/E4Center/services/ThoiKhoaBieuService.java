@@ -39,7 +39,6 @@ public class ThoiKhoaBieuService implements IThoiKhoaBieuService {
 
         // Tạo ThoiKhoaBieuRespone từ dữ liệu đã tìm thấy
         ThoiKhoaBieuRespone response = new ThoiKhoaBieuRespone(
-                tkb.getMatkb(),
                 tkb.getThuhoc(),
                 tkb.getTgbatdau(),
                 tkb.getTgketthuc(),
@@ -117,6 +116,18 @@ public class ThoiKhoaBieuService implements IThoiKhoaBieuService {
         // Truy vấn tìm giáo viên rảnh
         return thoiKhoaBieuRepository.findGiaoVienRanh(thuHoc, tgbatdau, tgketthuc);
     }
+
+    public List<ThoiKhoaBieuRespone> getScheduleForUser(Long maNguoiDung) {
+        return thoiKhoaBieuRepository.findScheduleByUserId(maNguoiDung).stream().map(thoiKhoaBieu -> {
+            return new ThoiKhoaBieuRespone().builder()
+                    .thuhoc(thoiKhoaBieu.getThuhoc())
+                    .tgbatdau(thoiKhoaBieu.getTgbatdau())
+                    .tgketthuc(thoiKhoaBieu.getTgketthuc())
+                    .tenphonghoc(thoiKhoaBieu.getPhonghoc().getTenphong())
+                    .build();
+        }).collect(Collectors.toList());
+    }
+
 
     }
 

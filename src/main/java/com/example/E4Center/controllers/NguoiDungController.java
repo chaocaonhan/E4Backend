@@ -2,6 +2,7 @@ package com.example.E4Center.controllers;
 
 
 import com.example.E4Center.Responses.NguoiDungResponse;
+import com.example.E4Center.Responses.ThoiKhoaBieuRespone;
 import com.example.E4Center.dtos.NguoiDungDTO;
 import com.example.E4Center.models.NguoiDung;
 import com.example.E4Center.repositories.NguoiDungRepository;
@@ -121,6 +122,11 @@ public class NguoiDungController {
         return ketQua;
     }
 
+    @GetMapping("/personalSchedule/{maNguoiDung}")
+    public ResponseEntity<List<ThoiKhoaBieuRespone>> getPersonalSchedule(@PathVariable Long maNguoiDung) {
+        List<ThoiKhoaBieuRespone> schedule = thoiKhoaBieuService.getScheduleForUser(maNguoiDung);
+        return ResponseEntity.ok(schedule);
+    }
 
 
 }

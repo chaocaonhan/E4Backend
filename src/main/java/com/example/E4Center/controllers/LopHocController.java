@@ -90,8 +90,7 @@ public class LopHocController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteLopHocById(@PathVariable long id) {
         try {
-            lophocService.deleteLopHocById(id);
-            return ResponseEntity.ok("Deleted class with ID: " + id);
+            return lophocService.deleteLopHocById(id);
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Failed to delete class with ID: " + id + ". Error: " + ex.getMessage());

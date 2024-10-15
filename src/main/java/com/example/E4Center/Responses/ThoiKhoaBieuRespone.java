@@ -10,7 +10,6 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ThoiKhoaBieuRespone {
-    private Long matkb;
     private Integer thuhoc;
     private LocalTime tgbatdau;
     private LocalTime tgketthuc;

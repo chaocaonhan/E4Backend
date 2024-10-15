@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.text.Normalizer;
 import java.util.List;
 
 @Service
@@ -61,8 +62,11 @@ public class XacNhanService implements IXacNhanService {
             newNguoiDung.setSdt(existingXacNhan.getSdt());
             newNguoiDung.setDiachi(existingXacNhan.getDiachi());
             newNguoiDung.setEmail(existingXacNhan.getEmail());
-            String username = existingXacNhan.getHoten().toLowerCase().replaceAll("\\s+", "");
-            newNguoiDung.setTendangnhap(username); // Convert to lowercase and remove spaces
+            String username = Normalizer.normalize(existingXacNhan.getHoten(), Normalizer.Form.NFD)
+                    .replaceAll("\\p{M}", "") // Loại bỏ dấu
+                    .toLowerCase()            // Chuyển thành chữ thường
+                    .replaceAll("\\s+", "");  // Loại bỏ khoảng trắng
+            newNguoiDung.setTendangnhap(username);
             newNguoiDung.setMatkhau("12345"); // Default password
             newNguoiDung.setChucVu(chucVuRepository.getReferenceById(1)); // Set default MaChucVu
             nguoiDungRepository.save(newNguoiDung); // Save NguoiDung

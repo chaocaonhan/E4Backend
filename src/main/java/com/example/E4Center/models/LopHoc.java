@@ -30,7 +30,6 @@ public class LopHoc {
     private String thoigianhoc;
     private String thuhoc;
 
-
     @Column(length = 10)
     private String cahoc;//    chuyển từ tkb sang
 
@@ -38,8 +37,7 @@ public class LopHoc {
     @JoinColumn(name = "makhoahoc", referencedColumnName = "makhoahoc")
     private KhoaHoc khoaHoc;
 
-    @OneToMany(mappedBy = "lopHoc")
+    @OneToMany(mappedBy = "lopHoc", orphanRemoval = true, cascade = {CascadeType.ALL, CascadeType.REMOVE})
     private Set<NguoiLopHoc> nguoiLopHocs;
-
 
 }
