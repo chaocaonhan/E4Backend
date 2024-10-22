@@ -54,7 +54,7 @@ public class XacNhanService implements IXacNhanService {
 
 
         // Check if trangthai changed from "Chờ Xét Duyệt" to "Hoàn thành"
-        if (oldTrangThai.equals("Chờ Xác Nhận") && existingXacNhan.getTrangthai().equals("Hoàn thành")) {
+        if (oldTrangThai.equals("Chờ Xác Nhận") && existingXacNhan.getTrangthai().equals("Hoàn Thành")) {
             // Create new NguoiDung entry
             NguoiDung newNguoiDung = new NguoiDung();
             newNguoiDung.setHoten(existingXacNhan.getHoten());
