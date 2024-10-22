@@ -1,7 +1,10 @@
 package com.example.E4Center.services;
 
+import com.example.E4Center.Responses.LoginResponse;
 import com.example.E4Center.Responses.NguoiDungResponse;
 import com.example.E4Center.dtos.NguoiDungDTO;
+import com.example.E4Center.dtos.NguoiDungDangNhapDTO;
+import com.example.E4Center.exceptions.DataNotFoundException;
 import com.example.E4Center.services.iservices.INguoiDungService;
 import com.example.E4Center.models.ChucVu;
 import com.example.E4Center.models.NguoiDung;
@@ -44,6 +47,23 @@ public class NguoiDungService implements INguoiDungService {
 
         return nguoiDungRepository.save(nguoiDung);
     }
+
+    public LoginResponse login(NguoiDungDangNhapDTO nguoiDungDangNhapDTO) throws DataNotFoundException {
+        NguoiDung nd = nguoiDungRepository.findByTendangnhap(nguoiDungDangNhapDTO.getTendangnhap());
+        if (nd == null) {
+            throw new DataNotFoundException("Không tìm thấy người dùng");
+        }
+        if (!nd.getMatkhau().equals(nguoiDungDangNhapDTO.getMatkhau())) {
+            throw new DataNotFoundException("Sai mật khẩu hoặc tên đăng nhập");
+        }
+
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setManguoidung(nd.getManguoidung());
+        loginResponse.setTenloaichucvu(nd.getChucVu().getLoaiChucvu().getTenloaichucvu());
+
+        return loginResponse;
+    }
+
 
     @Override
     public NguoiDung getNguoiDungById(Long MaNguoiDung) {

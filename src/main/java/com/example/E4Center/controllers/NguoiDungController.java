@@ -1,9 +1,12 @@
 package com.example.E4Center.controllers;
 
 
+import com.example.E4Center.Responses.LoginResponse;
 import com.example.E4Center.Responses.NguoiDungResponse;
 import com.example.E4Center.Responses.ThoiKhoaBieuRespone;
 import com.example.E4Center.dtos.NguoiDungDTO;
+import com.example.E4Center.dtos.NguoiDungDangNhapDTO;
+import com.example.E4Center.exceptions.DataNotFoundException;
 import com.example.E4Center.models.NguoiDung;
 import com.example.E4Center.repositories.NguoiDungRepository;
 import com.example.E4Center.services.NguoiDungService;
@@ -43,6 +46,13 @@ public class NguoiDungController {
         nguoidungService.createNguoiDung(nguoiDungDTO);
         return ResponseEntity.ok(nguoiDungDTO);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody NguoiDungDangNhapDTO nguoiDungDangNhapDTO) throws DataNotFoundException {
+        LoginResponse response = nguoidungService.login(nguoiDungDangNhapDTO);
+        return ResponseEntity.ok(response);
+    }
+
 
     @GetMapping("")
     public  ResponseEntity<List<NguoiDungResponse>> getAllNguoiDung() {

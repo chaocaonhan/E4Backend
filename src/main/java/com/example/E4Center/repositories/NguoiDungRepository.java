@@ -15,6 +15,7 @@ public interface NguoiDungRepository extends JpaRepository<NguoiDung, Long> {
     List<NguoiDung> findByTenKhoaHoc(@Param("tenKhoaHoc") String tenKhoaHoc);
 
     NguoiDung findNguoiDungByHoten(String hoten);
+    NguoiDung findByTendangnhap(String tendangnhap);
 
 
 
