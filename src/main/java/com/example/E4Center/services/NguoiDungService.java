@@ -59,6 +59,7 @@ public class NguoiDungService implements INguoiDungService {
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setManguoidung(nd.getManguoidung());
+        loginResponse.setTennguoidung(nd.getHoten());
         loginResponse.setTenloaichucvu(nd.getChucVu().getLoaiChucvu().getTenloaichucvu());
 
         return loginResponse;

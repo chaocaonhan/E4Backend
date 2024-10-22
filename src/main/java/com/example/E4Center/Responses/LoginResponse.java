@@ -11,4 +11,5 @@ import lombok.*;
 public class LoginResponse {
     private Long manguoidung;
     private String tenloaichucvu;
+    private String tennguoidung;
 }
