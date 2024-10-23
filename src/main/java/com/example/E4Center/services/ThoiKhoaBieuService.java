@@ -1,5 +1,6 @@
 package com.example.E4Center.services;
 
+import com.example.E4Center.Responses.ThoiKhoaBieuCaNhanResponse;
 import com.example.E4Center.Responses.ThoiKhoaBieuRespone;
 import com.example.E4Center.dtos.ThoiKhoaBieuDTO;
 import com.example.E4Center.models.NguoiDung;
@@ -117,17 +118,23 @@ public class ThoiKhoaBieuService implements IThoiKhoaBieuService {
         return thoiKhoaBieuRepository.findGiaoVienRanh(thuHoc, tgbatdau, tgketthuc);
     }
 
-    public List<ThoiKhoaBieuRespone> getScheduleForUser(Long maNguoiDung) {
+    public List<ThoiKhoaBieuCaNhanResponse> getScheduleForUser(Long maNguoiDung) {
         return thoiKhoaBieuRepository.findScheduleByUserId(maNguoiDung).stream().map(thoiKhoaBieu -> {
-            return new ThoiKhoaBieuRespone().builder()
+            return ThoiKhoaBieuCaNhanResponse.builder()
                     .thuhoc(thoiKhoaBieu.getThuhoc())
                     .tgbatdau(thoiKhoaBieu.getTgbatdau())
                     .tgketthuc(thoiKhoaBieu.getTgketthuc())
                     .tenphonghoc(thoiKhoaBieu.getPhonghoc().getTenphong())
+                    .ngaykhaigiang(thoiKhoaBieu.getLophoc().getNgaykhaigiang())
+                    .tenlop(thoiKhoaBieu.getLophoc().getTenlophoc())
+                    .thoigianhoc(thoiKhoaBieu.getLophoc().getThoigianhoc())
                     .build();
         }).collect(Collectors.toList());
     }
 
 
-    }
+
+
+
+}
 

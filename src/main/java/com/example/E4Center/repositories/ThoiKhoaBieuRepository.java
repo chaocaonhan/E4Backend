@@ -1,5 +1,6 @@
 package com.example.E4Center.repositories;
 
+import com.example.E4Center.Responses.ThoiKhoaBieuCaNhanResponse;
 import com.example.E4Center.Responses.ThoiKhoaBieuRespone;
 import com.example.E4Center.models.NguoiDung;
 import com.example.E4Center.models.PhongHoc;
