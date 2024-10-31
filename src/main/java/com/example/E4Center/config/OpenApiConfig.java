@@ -13,6 +13,6 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI openAPI() {
         return new OpenAPI().info(new Info().title("E4Center API").version("V1.0"))
-                .servers(List.of(new Server().url("https://e4backend.railway.internal/")));
+                .servers(List.of(new Server().url("e4backend-production.up.railway.app")));
     }
 }
