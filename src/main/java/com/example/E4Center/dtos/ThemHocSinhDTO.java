@@ -13,7 +13,7 @@ public class ThemHocSinhDTO {
         this.nguoiDungDTO = nguoiDungDTO;
     }
 
-    public Long getMaLop() {
+    public Long getMalop() {
         return malop;
     }
 

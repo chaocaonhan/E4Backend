@@ -18,12 +18,10 @@ import com.example.E4Center.services.NguoiDungService;
 import com.example.E4Center.services.ThoiKhoaBieuService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,7 +68,7 @@ public ResponseEntity<?> themHocSinhAndThemVaoLop(
     }
 
     NguoiDungDTO nguoiDungDTO = themHocSinhDTO.getNguoiDungDTO();
-    Long malop = themHocSinhDTO.getMaLop();
+    Long malop = themHocSinhDTO.getMalop();
 
     NguoiDung recentAddUser = nguoidungService.createNguoiDung(nguoiDungDTO);
 
