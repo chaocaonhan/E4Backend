@@ -4,20 +4,26 @@ package com.example.E4Center.controllers;
 import com.example.E4Center.Responses.LoginResponse;
 import com.example.E4Center.Responses.NguoiDungResponse;
 import com.example.E4Center.Responses.ThoiKhoaBieuCaNhanResponse;
-import com.example.E4Center.Responses.ThoiKhoaBieuRespone;
 import com.example.E4Center.dtos.NguoiDungDTO;
 import com.example.E4Center.dtos.NguoiDungDangNhapDTO;
+import com.example.E4Center.dtos.ThemHocSinhDTO;
 import com.example.E4Center.exceptions.DataNotFoundException;
+import com.example.E4Center.models.LopHoc;
 import com.example.E4Center.models.NguoiDung;
+import com.example.E4Center.models.NguoiLopHoc;
 import com.example.E4Center.repositories.NguoiDungRepository;
+import com.example.E4Center.repositories.NguoiLopHocRepository;
+import com.example.E4Center.services.LopHocService;
 import com.example.E4Center.services.NguoiDungService;
 import com.example.E4Center.services.ThoiKhoaBieuService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,6 +38,8 @@ public class NguoiDungController {
     private final NguoiDungService nguoidungService;
     private final NguoiDungRepository nguoiDungRepository;
     private final ThoiKhoaBieuService thoiKhoaBieuService;
+    private final LopHocService lopHocService;
+    private final NguoiLopHocRepository nguoiLopHocRepository;
 
     @PostMapping()
     public ResponseEntity<?> createNguoiDung(
@@ -47,6 +55,39 @@ public class NguoiDungController {
         nguoidungService.createNguoiDung(nguoiDungDTO);
         return ResponseEntity.ok(nguoiDungDTO);
     }
+
+
+@PostMapping("/themhocsinh")
+public ResponseEntity<?> themHocSinhAndThemVaoLop(
+        @Valid @RequestBody ThemHocSinhDTO themHocSinhDTO,
+        BindingResult bindingResult) throws Exception {
+    if (bindingResult.hasErrors()) {
+        List<String> errorMessages = bindingResult.getFieldErrors()
+                .stream()
+                .map(FieldError::getDefaultMessage)
+                .toList();
+        return ResponseEntity.badRequest().body(errorMessages);
+    }
+
+    NguoiDungDTO nguoiDungDTO = themHocSinhDTO.getNguoiDungDTO();
+    Long malop = themHocSinhDTO.getMaLop();
+
+    NguoiDung recentAddUser = nguoidungService.createNguoiDung(nguoiDungDTO);
+
+    LopHoc exitsLopHoc = lopHocService.getLopHocById(malop);
+    if(exitsLopHoc == null) {
+        throw new DataNotFoundException("Không tìm thấy lớp !");
+    }
+
+    NguoiLopHoc newNLH = new NguoiLopHoc();
+    newNLH.setNguoiDung(recentAddUser);
+    newNLH.setLopHoc(exitsLopHoc);
+    newNLH.setDiem(null);
+    newNLH.setTrangThai("Đang Học");
+    nguoiLopHocRepository.save(newNLH);
+
+    return ResponseEntity.ok("Đã thêm học sinh vào lớp!");
+}
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody NguoiDungDangNhapDTO nguoiDungDangNhapDTO) throws DataNotFoundException {
