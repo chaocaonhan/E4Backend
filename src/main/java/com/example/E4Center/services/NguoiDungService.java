@@ -115,7 +115,6 @@ public class NguoiDungService implements INguoiDungService {
         DiemHocVienResponse diemHocVienResponse = new DiemHocVienResponse();
         diemHocVienResponse.setDiemkiemtra(nlh.getDiemkiemtra());
         diemHocVienResponse.setDiemdiemcuoiki(nlh.getDiemcuoiki());
-        diemHocVienResponse.setDiem(nlh.getDiem());
 
         return diemHocVienResponse;
     }
@@ -123,7 +122,6 @@ public class NguoiDungService implements INguoiDungService {
     public void updateDiemHocVien(Long mahocvien, DiemHocVienResponse diemHocVienResponse) {
         NguoiLopHoc exitsNlh = nguoiLopHocRepository.findNguoiLopHocByMaNguoiDungId(mahocvien);
         exitsNlh.setDiemkiemtra(diemHocVienResponse.getDiemkiemtra());
-        exitsNlh.setDiem(diemHocVienResponse.getDiem());
         exitsNlh.setDiemcuoiki(diemHocVienResponse.getDiemdiemcuoiki());
         nguoiLopHocRepository.save(exitsNlh);
     }

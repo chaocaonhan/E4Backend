@@ -75,8 +75,9 @@ public class XacNhanService implements IXacNhanService {
             // Create new NguoiLopHoc entry
             NguoiLopHoc newNguoiLopHoc = new NguoiLopHoc();
             newNguoiLopHoc.setNguoiDung(newNguoiDung); // Associate with the new user
-            newNguoiLopHoc.setLopHoc(existingXacNhan.getLopHoc()); // Assuming you want to keep the same class
-            newNguoiLopHoc.setDiem(null); // Default score is null
+            newNguoiLopHoc.setLopHoc(existingXacNhan.getLopHoc());
+            newNguoiLopHoc.setDiemkiemtra(null);
+            newNguoiLopHoc.setDiemcuoiki(null);
             newNguoiLopHoc.setTrangThai("Đang Học"); // Default status
             nguoiLopHocRepository.save(newNguoiLopHoc); // Save NguoiLopHoc
         }

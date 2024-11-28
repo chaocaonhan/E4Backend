@@ -54,8 +54,7 @@ public class LopHocService implements ILopHocService {
                                 nlh.getNguoiDung().getDiachi(),
                                 nlh.getNguoiDung().getEmail(),
                                 nlh.getDiemkiemtra(),
-                                nlh.getDiemcuoiki(),
-                                nlh.getDiem()))
+                                nlh.getDiemcuoiki()))
                         .collect(Collectors.toList()))
                 .giangVien(lopHoc.getNguoiLopHocs().stream()
                         .filter(nlh -> nlh.getNguoiDung().getChucVu().getLoaiChucvu().getMaloaichucvu() == 2) // Filter teachers
@@ -66,8 +65,7 @@ public class LopHocService implements ILopHocService {
                                 nlh.getNguoiDung().getDiachi(),
                                 nlh.getNguoiDung().getEmail(),
                                 nlh.getDiemkiemtra(),
-                                nlh.getDiemcuoiki(),
-                                nlh.getDiem()))
+                                nlh.getDiemcuoiki()))
                         .collect(Collectors.toList()))
                 .build();
 
@@ -96,8 +94,7 @@ public class LopHocService implements ILopHocService {
                                     nlh.getNguoiDung().getDiachi(),
                                     nlh.getNguoiDung().getEmail(),
                                     nlh.getDiemkiemtra(),
-                                    nlh.getDiemcuoiki(),
-                                    nlh.getDiem())
+                                    nlh.getDiemcuoiki())
                                     )
                             .collect(Collectors.toList()))
                     .giangVien(lopHoc.getNguoiLopHocs().stream()
@@ -109,8 +106,7 @@ public class LopHocService implements ILopHocService {
                                     nlh.getNguoiDung().getDiachi(),
                                     nlh.getNguoiDung().getEmail(),
                                     nlh.getDiemkiemtra(),
-                                    nlh.getDiemcuoiki(),
-                                    nlh.getDiem()))
+                                    nlh.getDiemcuoiki()))
                             .collect(Collectors.toList()))
                     .build();
         }).collect(Collectors.toList());
@@ -147,7 +143,6 @@ public class LopHocService implements ILopHocService {
         NguoiLopHoc newNguoiLopHoc = new NguoiLopHoc();
         newNguoiLopHoc.setNguoiDung(giaoVien);
         newNguoiLopHoc.setLopHoc(newLopHoc);
-        newNguoiLopHoc.setDiem(null);
         newNguoiLopHoc.setTrangThai("Đang Học");
         nguoiLopHocRepository.save(newNguoiLopHoc);
 

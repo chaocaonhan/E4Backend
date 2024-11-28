@@ -11,5 +11,4 @@ import lombok.*;
 public class DiemHocVienResponse {
     private Float diemkiemtra;
     private Float diemdiemcuoiki;
-    private Float diem;
 }

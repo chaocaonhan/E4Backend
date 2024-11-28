@@ -81,7 +81,6 @@ public ResponseEntity<?> themHocSinhAndThemVaoLop(
     NguoiLopHoc newNLH = new NguoiLopHoc();
     newNLH.setNguoiDung(recentAddUser);
     newNLH.setLopHoc(exitsLopHoc);
-    newNLH.setDiem(null);
     newNLH.setTrangThai("Đang Học");
     nguoiLopHocRepository.save(newNLH);
 

@@ -23,8 +23,6 @@ public class NguoiLopHoc {
     @JoinColumn(name = "malop")
     private LopHoc lopHoc;
 
-    @Column(name = "Diem")
-    private Float diem;
 
     @Column(name = "diemkiemtra")
     private Float diemkiemtra;
