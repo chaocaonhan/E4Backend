@@ -26,6 +26,12 @@ public class NguoiLopHoc {
     @Column(name = "Diem")
     private Float diem;
 
+    @Column(name = "diemkiemtra")
+    private Float diemkiemtra;
+
+    @Column(name = "diemcuoiki")
+    private Float diemcuoiki;
+
     @Column(name = "trangthai", length = 100)
     private String trangThai;
 }

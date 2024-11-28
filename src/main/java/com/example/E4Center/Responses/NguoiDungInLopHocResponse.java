@@ -15,4 +15,8 @@ public class NguoiDungInLopHocResponse {
     private String sdt;
     private String diachi;
     private String email;
+    private Float diemkiemtra;
+    private Float diemdiemcuoiki;
+    private Float diem;
+
 }

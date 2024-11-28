@@ -28,7 +28,7 @@ public class LopHocService implements ILopHocService {
 
     @Override
     public LopHoc getLopHocById(long MaLop) throws Exception {
-        return  lopHocRepository.findById(MaLop).orElseThrow(() -> new RuntimeException(" not found"));
+        return  lopHocRepository.findById(MaLop).orElseThrow(() -> new RuntimeException(" Khong tim thay lop"));
     }
 
     @Override
@@ -52,7 +52,10 @@ public class LopHocService implements ILopHocService {
                                 nlh.getNguoiDung().getGioitinh(),
                                 nlh.getNguoiDung().getSdt(),
                                 nlh.getNguoiDung().getDiachi(),
-                                nlh.getNguoiDung().getEmail()))
+                                nlh.getNguoiDung().getEmail(),
+                                nlh.getDiemkiemtra(),
+                                nlh.getDiemcuoiki(),
+                                nlh.getDiem()))
                         .collect(Collectors.toList()))
                 .giangVien(lopHoc.getNguoiLopHocs().stream()
                         .filter(nlh -> nlh.getNguoiDung().getChucVu().getLoaiChucvu().getMaloaichucvu() == 2) // Filter teachers
@@ -61,7 +64,10 @@ public class LopHocService implements ILopHocService {
                                 nlh.getNguoiDung().getGioitinh(),
                                 nlh.getNguoiDung().getSdt(),
                                 nlh.getNguoiDung().getDiachi(),
-                                nlh.getNguoiDung().getEmail()))
+                                nlh.getNguoiDung().getEmail(),
+                                nlh.getDiemkiemtra(),
+                                nlh.getDiemcuoiki(),
+                                nlh.getDiem()))
                         .collect(Collectors.toList()))
                 .build();
 
@@ -88,7 +94,11 @@ public class LopHocService implements ILopHocService {
                                     nlh.getNguoiDung().getGioitinh(),
                                     nlh.getNguoiDung().getSdt(),
                                     nlh.getNguoiDung().getDiachi(),
-                                    nlh.getNguoiDung().getEmail()))
+                                    nlh.getNguoiDung().getEmail(),
+                                    nlh.getDiemkiemtra(),
+                                    nlh.getDiemcuoiki(),
+                                    nlh.getDiem())
+                                    )
                             .collect(Collectors.toList()))
                     .giangVien(lopHoc.getNguoiLopHocs().stream()
                             .filter(nlh -> nlh.getNguoiDung().getChucVu().getLoaiChucvu().getMaloaichucvu()==2) // Filter teachers
@@ -97,7 +107,10 @@ public class LopHocService implements ILopHocService {
                                     nlh.getNguoiDung().getGioitinh(),
                                     nlh.getNguoiDung().getSdt(),
                                     nlh.getNguoiDung().getDiachi(),
-                                    nlh.getNguoiDung().getEmail()))
+                                    nlh.getNguoiDung().getEmail(),
+                                    nlh.getDiemkiemtra(),
+                                    nlh.getDiemcuoiki(),
+                                    nlh.getDiem()))
                             .collect(Collectors.toList()))
                     .build();
         }).collect(Collectors.toList());
