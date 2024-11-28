@@ -1,10 +1,13 @@
 package com.example.E4Center.services;
 
+import com.example.E4Center.Responses.DiemHocVienResponse;
 import com.example.E4Center.Responses.LoginResponse;
 import com.example.E4Center.Responses.NguoiDungResponse;
 import com.example.E4Center.dtos.NguoiDungDTO;
 import com.example.E4Center.dtos.NguoiDungDangNhapDTO;
 import com.example.E4Center.exceptions.DataNotFoundException;
+import com.example.E4Center.models.NguoiLopHoc;
+import com.example.E4Center.repositories.NguoiLopHocRepository;
 import com.example.E4Center.services.iservices.INguoiDungService;
 import com.example.E4Center.models.ChucVu;
 import com.example.E4Center.models.NguoiDung;
@@ -24,6 +27,7 @@ public class NguoiDungService implements INguoiDungService {
     private final NguoiDungRepository nguoiDungRepository;
     private final ModelMapper modelMapper;
     private final ChucVuRepository chucVuRepository;
+    private final NguoiLopHocRepository nguoiLopHocRepository;
 
     @Override
     public NguoiDung createNguoiDung(NguoiDungDTO nguoiDungDTO) {
@@ -76,6 +80,8 @@ public class NguoiDungService implements INguoiDungService {
 
 
 
+
+
     @Override
     public List<NguoiDungResponse> getAllNguoiDung() {
         List<NguoiDung> nguoiDungList = nguoiDungRepository.findAll();
@@ -104,10 +110,30 @@ public class NguoiDungService implements INguoiDungService {
         return existingNguoiDung;
     }
 
+    public DiemHocVienResponse laydiemHocVien(long MaNguoiDung){
+        NguoiLopHoc nlh= nguoiLopHocRepository.findNguoiLopHocByMaNguoiDungId(MaNguoiDung);
+        DiemHocVienResponse diemHocVienResponse = new DiemHocVienResponse();
+        diemHocVienResponse.setDiemkiemtra(nlh.getDiemkiemtra());
+        diemHocVienResponse.setDiemdiemcuoiki(nlh.getDiemcuoiki());
+        diemHocVienResponse.setDiem(nlh.getDiem());
+
+        return diemHocVienResponse;
+    }
+
+    public void updateDiemHocVien(Long mahocvien, DiemHocVienResponse diemHocVienResponse) {
+        NguoiLopHoc exitsNlh = nguoiLopHocRepository.findNguoiLopHocByMaNguoiDungId(mahocvien);
+        exitsNlh.setDiemkiemtra(diemHocVienResponse.getDiemkiemtra());
+        exitsNlh.setDiem(diemHocVienResponse.getDiem());
+        exitsNlh.setDiemcuoiki(diemHocVienResponse.getDiemdiemcuoiki());
+        nguoiLopHocRepository.save(exitsNlh);
+    }
+
     @Override
     public void deleteNguoiDung(long MaNguoiDung) {
         nguoiDungRepository.deleteById(MaNguoiDung);
     }
+
+
 
     @Override
     public List<NguoiDung> getALLGiaoVien() {

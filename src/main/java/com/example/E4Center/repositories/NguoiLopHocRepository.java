@@ -16,4 +16,9 @@ public interface NguoiLopHocRepository extends JpaRepository<NguoiLopHoc, Intege
     @Modifying
     @Query("DELETE FROM NguoiLopHoc n WHERE n.lopHoc.malop = :maLop")
     void deleteByMaLop(@Param("maLop") Long maLop);
+
+
+    @Query("SELECT nl FROM NguoiLopHoc nl WHERE nl.nguoiDung.manguoidung = :maNguoiDungId")
+    NguoiLopHoc findNguoiLopHocByMaNguoiDungId(@Param("maNguoiDungId") Long maNguoiDungId);
+
 }

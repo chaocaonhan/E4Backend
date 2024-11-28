@@ -1,5 +1,6 @@
 package com.example.E4Center.repositories;
 
+import com.example.E4Center.Responses.DiemHocVienResponse;
 import com.example.E4Center.Responses.ThoiKhoaBieuRespone;
 import com.example.E4Center.models.NguoiDung;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,7 +17,6 @@ public interface NguoiDungRepository extends JpaRepository<NguoiDung, Long> {
 
     NguoiDung findNguoiDungByHoten(String hoten);
     NguoiDung findByTendangnhap(String tendangnhap);
-
 
 
 }

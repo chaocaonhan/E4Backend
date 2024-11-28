@@ -1,6 +1,7 @@
 package com.example.E4Center.controllers;
 
 
+import com.example.E4Center.Responses.DiemHocVienResponse;
 import com.example.E4Center.Responses.LoginResponse;
 import com.example.E4Center.Responses.NguoiDungResponse;
 import com.example.E4Center.Responses.ThoiKhoaBieuCaNhanResponse;
@@ -86,6 +87,19 @@ public ResponseEntity<?> themHocSinhAndThemVaoLop(
 
     return ResponseEntity.ok("Đã thêm học sinh vào lớp!");
 }
+
+    @GetMapping("/laydiemhocvien/{manguoidung}")
+    public DiemHocVienResponse layDiemHocVien(@PathVariable long manguoidung){
+        DiemHocVienResponse diemHocVienResponse = nguoidungService.laydiemHocVien(manguoidung);
+        return diemHocVienResponse;
+    }
+
+    @PutMapping("/suadiemhocvien/{manguoidung}")
+    public ResponseEntity<String> suadiemHocVien(@PathVariable long manguoidung,
+                                                 @RequestBody DiemHocVienResponse diemHocVienResponse){
+        nguoidungService.updateDiemHocVien(manguoidung, diemHocVienResponse);
+        return ResponseEntity.ok("cap nhat thanh cong! ");
+    }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody NguoiDungDangNhapDTO nguoiDungDangNhapDTO) throws DataNotFoundException {
