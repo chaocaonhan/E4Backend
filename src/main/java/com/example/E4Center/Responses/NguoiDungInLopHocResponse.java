@@ -10,6 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class NguoiDungInLopHocResponse {
+    private Long manguoidung;
     private String hoten;
     private String gioitinh;
     private String sdt;

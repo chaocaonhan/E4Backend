@@ -48,6 +48,7 @@ public class LopHocService implements ILopHocService {
                 .hocvien(lopHoc.getNguoiLopHocs().stream()
                         .filter(nlh -> nlh.getNguoiDung().getChucVu().getLoaiChucvu().getMaloaichucvu() == 1) // Filter students
                         .map(nlh -> new NguoiDungInLopHocResponse(
+                                nlh.getNguoiDung().getManguoidung(),
                                 nlh.getNguoiDung().getHoten(),
                                 nlh.getNguoiDung().getGioitinh(),
                                 nlh.getNguoiDung().getSdt(),
@@ -59,6 +60,7 @@ public class LopHocService implements ILopHocService {
                 .giangVien(lopHoc.getNguoiLopHocs().stream()
                         .filter(nlh -> nlh.getNguoiDung().getChucVu().getLoaiChucvu().getMaloaichucvu() == 2) // Filter teachers
                         .map(nlh -> new NguoiDungInLopHocResponse(
+                                nlh.getNguoiDung().getManguoidung(),
                                 nlh.getNguoiDung().getHoten(),
                                 nlh.getNguoiDung().getGioitinh(),
                                 nlh.getNguoiDung().getSdt(),
@@ -88,6 +90,7 @@ public class LopHocService implements ILopHocService {
                     .hocvien(lopHoc.getNguoiLopHocs().stream()
                             .filter(nlh -> nlh.getNguoiDung().getChucVu().getMachucvu() == 1) // Filter students
                             .map(nlh -> new NguoiDungInLopHocResponse(
+                                    nlh.getNguoiDung().getManguoidung(),
                                     nlh.getNguoiDung().getHoten(),
                                     nlh.getNguoiDung().getGioitinh(),
                                     nlh.getNguoiDung().getSdt(),
@@ -100,6 +103,7 @@ public class LopHocService implements ILopHocService {
                     .giangVien(lopHoc.getNguoiLopHocs().stream()
                             .filter(nlh -> nlh.getNguoiDung().getChucVu().getLoaiChucvu().getMaloaichucvu()==2) // Filter teachers
                             .map(nlh -> new NguoiDungInLopHocResponse(
+                                    nlh.getNguoiDung().getManguoidung(),
                                     nlh.getNguoiDung().getHoten(),
                                     nlh.getNguoiDung().getGioitinh(),
                                     nlh.getNguoiDung().getSdt(),
