@@ -79,9 +79,6 @@ public class NguoiDungService implements INguoiDungService {
     }
 
 
-
-
-
     @Override
     public List<NguoiDungResponse> getAllNguoiDung() {
         List<NguoiDung> nguoiDungList = nguoiDungRepository.findAll();

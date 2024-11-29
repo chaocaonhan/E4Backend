@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,6 +83,16 @@ public ResponseEntity<?> themHocSinhAndThemVaoLop(
     newNLH.setNguoiDung(recentAddUser);
     newNLH.setLopHoc(exitsLopHoc);
     newNLH.setTrangThai("Đang Học");
+
+    Date today = new Date();
+    Date thoigianUuDai = exitsLopHoc.getKhoaHoc().getThoigianuudai();
+    if (thoigianUuDai != null && today.before(thoigianUuDai)) {
+        int uudai = Integer.parseInt(exitsLopHoc.getKhoaHoc().getUudai());
+        newNLH.setUudai(uudai);
+    } else {
+        newNLH.setUudai(0);
+    }
+
     nguoiLopHocRepository.save(newNLH);
 
     return ResponseEntity.ok("Đã thêm học sinh vào lớp!");

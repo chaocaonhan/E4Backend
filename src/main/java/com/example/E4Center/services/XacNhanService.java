@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.text.Normalizer;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,12 +26,6 @@ public class XacNhanService implements IXacNhanService {
     private final ChucVuRepository chucVuRepository;
     private final LopHocService lopHocService;
 
-//    @Override
-//    public XacNhan createXacNhan(XacNhanDTO xacNhanDTO) {
-//        XacNhan xacNhan = new XacNhan();
-//        mapper.map(xacNhanDTO, xacNhan);
-//        return xacNhanRepository.save(xacNhan);
-//    }
 
     @Override
     public XacNhan getXacNhanById(Long MaXacNhan) {
@@ -78,6 +73,16 @@ public class XacNhanService implements IXacNhanService {
             newNguoiLopHoc.setLopHoc(existingXacNhan.getLopHoc());
             newNguoiLopHoc.setDiemkiemtra(null);
             newNguoiLopHoc.setDiemcuoiki(null);
+
+            Date today = new Date();
+            Date thoigianUuDai = existingXacNhan.getLopHoc().getKhoaHoc().getThoigianuudai(); // Lấy thời gian ưu đãi
+
+            if (thoigianUuDai != null && today.before(thoigianUuDai)) {
+                int uudai = Integer.parseInt(existingXacNhan.getLopHoc().getKhoaHoc().getUudai());
+                newNguoiLopHoc.setUudai(uudai);
+            } else {
+                newNguoiLopHoc.setUudai(0);
+            }
             newNguoiLopHoc.setTrangThai("Đang Học"); // Default status
             nguoiLopHocRepository.save(newNguoiLopHoc); // Save NguoiLopHoc
         }
