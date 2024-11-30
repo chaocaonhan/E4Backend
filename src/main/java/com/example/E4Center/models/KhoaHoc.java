@@ -1,9 +1,11 @@
 package com.example.E4Center.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "tblkhoahoc")
@@ -25,5 +27,9 @@ public class KhoaHoc {
 
     private String uudai;
     private Date thoigianuudai;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "khoaHoc", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<LopHoc> lopHocs;
 
 }

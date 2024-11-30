@@ -1,6 +1,7 @@
 package com.example.E4Center.services;
 
 import com.example.E4Center.dtos.KhoaHocDTO;
+import com.example.E4Center.dtos.KhoaHocDoanhThuDTO;
 import com.example.E4Center.services.iservices.IKhoaHocService;
 import com.example.E4Center.models.KhoaHoc;
 import com.example.E4Center.repositories.KhoaHocRepository;
@@ -53,4 +54,9 @@ public class KhoaHocService implements IKhoaHocService {
     public void deleteKhoaHoc(long MaKhoaHoc) {
         khoaHocRepository.deleteById(MaKhoaHoc);
     }
+
+    public List<KhoaHocDoanhThuDTO> getDoanhThuKhoaHoc() {
+        return khoaHocRepository.getDoanhThuKhoaHoc();
+    }
+
 }

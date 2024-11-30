@@ -33,6 +33,7 @@ public class LopHoc {
     @Column(length = 10)
     private String cahoc;//    chuyển từ tkb sang
 
+
     @ManyToOne(optional=false)
     @JoinColumn(name = "makhoahoc", referencedColumnName = "makhoahoc")
     private KhoaHoc khoaHoc;
