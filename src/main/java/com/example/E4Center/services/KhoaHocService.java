@@ -8,7 +8,10 @@ import com.example.E4Center.repositories.KhoaHocRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -57,6 +60,20 @@ public class KhoaHocService implements IKhoaHocService {
 
     public List<KhoaHocDoanhThuDTO> getDoanhThuKhoaHoc() {
         return khoaHocRepository.getDoanhThuKhoaHoc();
+    }
+
+    public List<Map<String, Object>> getSoLuongHocVienMoiKhoaHoc() {
+        List<Object[]> results = khoaHocRepository.getSoLuongHocVienMoiKhoaHoc();
+        List<Map<String, Object>> response = new ArrayList<>();
+
+        for (Object[] result : results) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("tenKhoaHoc", result[0]);
+            map.put("soLuongHocVien", result[1]);
+            response.add(map);
+        }
+
+        return response;
     }
 
 }

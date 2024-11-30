@@ -22,4 +22,13 @@ public interface KhoaHocRepository extends JpaRepository<KhoaHoc, Long > {
             "GROUP BY kh.tenkhoahoc")
     List<KhoaHocDoanhThuDTO> getDoanhThuKhoaHoc();
 
+    @Query("SELECT kh.tenkhoahoc, COUNT(nl) " +
+            "FROM KhoaHoc kh " +
+            "JOIN kh.lopHocs lh " +
+            "JOIN lh.nguoiLopHocs nl " +
+            "JOIN nl.nguoiDung nd " +
+            "WHERE nd.chucVu.loaiChucvu.maloaichucvu = 1 " +
+            "GROUP BY kh.tenkhoahoc")
+    List<Object[]> getSoLuongHocVienMoiKhoaHoc();
+
 }
